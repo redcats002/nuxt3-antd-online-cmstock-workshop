@@ -3,7 +3,7 @@ import { resolve } from "path";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@pinia/nuxt', 'dayjs-nuxt'],
   plugins: ['~/plugins/antd.ts'],
   alias: {
     "@": resolve(__dirname, "/")
@@ -16,5 +16,12 @@ export default defineNuxtConfig({
     exposeLevel: 2,
     injectPosition: 'first',
     viewer: true,
-  }
+  },
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
 })
