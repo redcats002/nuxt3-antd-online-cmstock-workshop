@@ -1,7 +1,12 @@
 <template>
-  <a-card class="tw-w-full tw-h-full tw-rounded-lg tw-drop-shadow-md">
-    <a-row justify="space-between" align="center">
+  <a-card
+    class="tw-w-full tw-h-full tw-rounded-lg tw-drop-shadow-md hover:tw-drop-shadow-lg tw-cursor-pointer tw-transition-all"
+  >
+    <a-row justify="space-between" align="center" class="tw-items-center">
       <div>
+        <a-tag :color="props.color" class="tw-rounded-md tw-p-4">
+          <props.icon class="tw-text-xl" />
+        </a-tag>
         <span class="tw-font-medium tw-text-lg"> {{ props.title }}</span>
       </div>
       <div>
@@ -15,5 +20,6 @@ const props = defineProps<{
   title: string;
   amount: string;
   color: string;
+  icon: any;
 }>();
 </script>

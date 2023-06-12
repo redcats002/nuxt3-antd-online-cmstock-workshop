@@ -3,7 +3,7 @@
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
         <span>
-          <smile-outlined />
+          <!-- <smile-outlined /> -->
           Name
         </span>
       </template>
@@ -15,89 +15,92 @@
           {{ record.name }}
         </a>
       </template>
-      <template v-else-if="column.key === 'tags'">
+      <template v-else-if="column.key == 'createdAt'">
         <span>
-          <a-tag
-            v-for="tag in record.tags"
-            :key="tag"
-            :color="
-              tag === 'loser'
-                ? 'volcano'
-                : tag.length > 5
-                ? 'geekblue'
-                : 'green'
-            "
-          >
-            {{ tag.toUpperCase() }}
-          </a-tag>
+          {{ dayjs(record.createdAt).format('DD/MM/YY • hh:mm') }}
+        </span>
+      </template>
+      <template v-else-if="column.key == 'updatedAt'">
+        <span>
+          {{ dayjs(record.updatedAt).format('DD/MM/YY • hh:mm') }}
         </span>
       </template>
       <template v-else-if="column.key === 'action'">
-        <span>
-          <a>Invite 一 {{ record.name }}</a>
-          <a-divider type="vertical" />
-          <a>Delete</a>
-          <a-divider type="vertical" />
-          <a class="ant-dropdown-link">
-            More actions
-            <down-outlined />
-          </a>
-        </span>
+        <a-row>
+          <a-button
+            class="tw-bg-[#ffc43d] tw-text-white tw-rounded-lg tw-mr-2"
+            @click="handleClickEdit(record.id)"
+          >
+            <span><EditOutlined /> </span>
+          </a-button>
+          <a-button
+            type="danger"
+            class="tw-rounded-lg"
+            @click="handleClickDelete(record.id)"
+          >
+            <span> <DeleteOutlined /> </span>
+          </a-button>
+        </a-row>
       </template>
     </template>
   </a-table>
 </template>
 <script lang="ts">
-import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue';
+import {
+  SmileOutlined,
+  DownOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons-vue';
+
 import { defineComponent } from 'vue';
 const columns = [
+  {
+    title: 'Image',
+    dataIndex: 'image',
+    key: 'image',
+  },
   {
     name: 'Name',
     dataIndex: 'name',
     key: 'name',
+    width: '30%',
+  },
+
+  {
+    title: 'Stock',
+    dataIndex: 'stock',
+    key: 'stock',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Created At',
+    key: 'createdAt',
+    dataIndex: 'createdAt',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
+    title: 'Updated At',
+    key: 'updatedAt',
+    dataIndex: 'updatedAt',
   },
   {
     title: 'Action',
     key: 'action',
   },
 ];
-
 const data = [
   {
-    key: '1',
+    id: 1,
+    image: 'John Brown',
     name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    stock: 32,
+    price: 500,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
 ];
 
@@ -105,11 +108,23 @@ export default defineComponent({
   components: {
     SmileOutlined,
     DownOutlined,
+    EditOutlined,
+    DeleteOutlined,
   },
-  setup() {
+  setup(props, { emit }) {
+    const dayjs = useDayjs();
+    const handleClickEdit = (id: number) => {
+      emit('handleClickEdit', id);
+    };
+    const handleClickDelete = (id: number) => {
+      emit('handleClickDelete', id);
+    };
     return {
       data,
       columns,
+      dayjs,
+      handleClickDelete,
+      handleClickEdit,
     };
   },
 });
