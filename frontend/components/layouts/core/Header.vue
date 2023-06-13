@@ -11,7 +11,7 @@
       <a-tag
         color="error"
         class="tw-rounded-lg tw-px-4 tw-cursor-pointer"
-        @click="$router.push('/')"
+        @click="$router.push('/login')"
       >
         <span class="tw-font-bold tw-text-xl">Logout</span>
       </a-tag>

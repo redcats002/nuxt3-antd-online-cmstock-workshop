@@ -1,5 +1,5 @@
 <template>
-  <a-table :columns="columns" :data-source="data">
+  <a-table :columns="columns" :data-source="props.stocks">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
         <span>
@@ -15,13 +15,20 @@
           {{ record.name }}
         </a>
       </template>
+      <template v-if="column.key === 'image'">
+        <a-image
+          :src="getFullImagePath(record.image)"
+          height="50px"
+          class="tw-object-contain"
+        />
+      </template>
       <template v-else-if="column.key == 'createdAt'">
-        <span>
+        <span class="tw-opacity-80">
           {{ dayjs(record.createdAt).format('DD/MM/YY • hh:mm') }}
         </span>
       </template>
       <template v-else-if="column.key == 'updatedAt'">
-        <span>
+        <span class="tw-opacity-80">
           {{ dayjs(record.updatedAt).format('DD/MM/YY • hh:mm') }}
         </span>
       </template>
@@ -111,6 +118,9 @@ export default defineComponent({
     EditOutlined,
     DeleteOutlined,
   },
+  props: {
+    stocks: Array,
+  },
   setup(props, { emit }) {
     const dayjs = useDayjs();
     const handleClickEdit = (id: number) => {
@@ -125,7 +135,9 @@ export default defineComponent({
       dayjs,
       handleClickDelete,
       handleClickEdit,
+      props,
     };
   },
 });
 </script>
+<style></style>

@@ -27,21 +27,7 @@
                 </a-col>
                 <a-col :span="24" class="tw-flex tw-justify-center tw-w-full">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
-                    class="tw-font-medium tw-w-full"
-                  >
-                    <a-input
-                      v-model:value="modelRef.name"
-                      @blur="
-                        validate('name', { trigger: 'blur' }).catch(() => {})
-                      "
-                    />
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24" class="tw-flex tw-justify-center">
-                  <a-form-item
-                    label="Activity name"
+                    label="Name"
                     v-bind="validateInfos.name"
                     class="tw-font-medium tw-w-full"
                   >
@@ -55,45 +41,45 @@
                 </a-col>
                 <a-col :span="12" class="tw-flex tw-justify-center">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
+                    label="Price"
+                    v-bind="validateInfos.price"
                     class="tw-font-medium tw-w-full"
                   >
                     <a-input
-                      v-model:value="modelRef.name"
+                      type="number"
+                      v-model:value="modelRef.price"
                       @blur="
-                        validate('name', { trigger: 'blur' }).catch(() => {})
+                        validate('price', { trigger: 'blur' }).catch(() => {})
                       "
                     />
                   </a-form-item>
                 </a-col>
                 <a-col :span="12" class="tw-flex tw-justify-center">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
+                    label="Stock"
+                    v-bind="validateInfos.stock"
                     class="tw-font-medium tw-w-full"
                   >
                     <a-input
-                      v-model:value="modelRef.name"
+                      type="number"
+                      v-model:value="modelRef.stock"
                       @blur="
-                        validate('name', { trigger: 'blur' }).catch(() => {})
+                        validate('stock', { trigger: 'blur' }).catch(() => {})
                       "
                     />
                   </a-form-item>
                 </a-col>
                 <a-col :span="24" class="tw-flex tw-justify-center">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
+                    label="Image file"
+                    v-bind="validateInfos.image"
                     class="tw-font-medium tw-w-full"
                   >
                     <a-upload
-                      v-model:file-list="fileList"
-                      name="avatar"
+                      name="image"
                       list-type="picture-card"
                       class="avatar-uploader"
                       :show-upload-list="false"
-                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       :before-upload="beforeUpload"
                       @change="handleChange"
                     >
@@ -137,12 +123,14 @@
 import { defineComponent, reactive, toRaw } from 'vue';
 import { Form, UploadChangeParam, UploadProps, message } from 'ant-design-vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
+// import api from '~/services/api';
 function getBase64(img: Blob, callback: (base64Url: string) => void) {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result as string));
   reader.readAsDataURL(img);
 }
 const useForm = Form.useForm;
+const api = useApi();
 export default defineComponent({
   components: {
     PlusOutlined,
@@ -151,13 +139,15 @@ export default defineComponent({
   setup() {
     const modelRef = reactive({
       name: '',
-      region: undefined,
+      price: '',
+      stock: '',
+      image: null as any,
     });
     const rulesRef = reactive({
       name: [
         {
           required: true,
-          message: 'Please input Activity name',
+          message: 'Please input name',
         },
         {
           min: 3,
@@ -166,10 +156,22 @@ export default defineComponent({
           trigger: 'blur',
         },
       ],
-      region: [
+      price: [
         {
           required: true,
-          message: 'Please select region',
+          message: 'Please input price',
+        },
+      ],
+      stock: [
+        {
+          required: true,
+          message: 'Please input amount of stock',
+        },
+      ],
+      image: [
+        {
+          required: true,
+          message: 'Please select image',
         },
       ],
     });
@@ -177,18 +179,25 @@ export default defineComponent({
       modelRef,
       rulesRef
     );
-    const onSubmit = () => {
-      validate()
-        .then(() => {
-          console.log(toRaw(modelRef));
+    const router = useRouter();
+    const onSubmit = async () => {
+      await validate()
+        .then(async () => {
+          const formData = new FormData();
+          const { name, price, stock } = modelRef;
+          formData.append('name', name);
+          formData.append('stock', stock.toString());
+          formData.append('price', price.toString());
+          if (modelRef.image) {
+            formData.append('image', modelRef.image);
+          }
+          await api.addProduct(formData);
+          router.back();
         })
         .catch((err) => {
           console.log('error', err);
         });
     };
-    const fileList = ref([]);
-    const loading = ref<boolean>(false);
-    const imageUrl = ref<string>('');
 
     const handleChange = (info: UploadChangeParam) => {
       if (info.file.status === 'uploading') {
@@ -196,7 +205,8 @@ export default defineComponent({
         return;
       }
       if (info.file.status === 'done') {
-        // Get this url from response in real world.
+        modelRef.image = info.file.originFileObj;
+
         getBase64(info.file.originFileObj!, (base64Url: string) => {
           imageUrl.value = base64Url;
           loading.value = false;
@@ -207,6 +217,9 @@ export default defineComponent({
         message.error('upload error');
       }
     };
+    const fileList = ref([]);
+    const loading = ref<boolean>(false);
+    const imageUrl = ref<string>('');
 
     const beforeUpload = (file: any) => {
       const isJpgOrPng =

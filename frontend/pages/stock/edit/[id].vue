@@ -27,21 +27,7 @@
                 </a-col>
                 <a-col :span="24" class="tw-flex tw-justify-center tw-w-full">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
-                    class="tw-font-medium tw-w-full"
-                  >
-                    <a-input
-                      v-model:value="modelRef.name"
-                      @blur="
-                        validate('name', { trigger: 'blur' }).catch(() => {})
-                      "
-                    />
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24" class="tw-flex tw-justify-center">
-                  <a-form-item
-                    label="Activity name"
+                    label="Name"
                     v-bind="validateInfos.name"
                     class="tw-font-medium tw-w-full"
                   >
@@ -55,45 +41,44 @@
                 </a-col>
                 <a-col :span="12" class="tw-flex tw-justify-center">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
+                    label="Price"
+                    v-bind="validateInfos.price"
                     class="tw-font-medium tw-w-full"
                   >
                     <a-input
-                      v-model:value="modelRef.name"
+                      v-model:value="modelRef.price"
                       @blur="
-                        validate('name', { trigger: 'blur' }).catch(() => {})
+                        validate('price', { trigger: 'blur' }).catch(() => {})
                       "
                     />
                   </a-form-item>
                 </a-col>
                 <a-col :span="12" class="tw-flex tw-justify-center">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
+                    label="Stock"
+                    v-bind="validateInfos.stock"
                     class="tw-font-medium tw-w-full"
                   >
                     <a-input
-                      v-model:value="modelRef.name"
+                      v-model:value="modelRef.stock"
                       @blur="
-                        validate('name', { trigger: 'blur' }).catch(() => {})
+                        validate('stock', { trigger: 'blur' }).catch(() => {})
                       "
                     />
                   </a-form-item>
                 </a-col>
                 <a-col :span="24" class="tw-flex tw-justify-center">
                   <a-form-item
-                    label="Activity name"
-                    v-bind="validateInfos.name"
+                    label="Image file"
+                    v-bind="validateInfos.image"
                     class="tw-font-medium tw-w-full"
                   >
                     <a-upload
-                      v-model:file-list="fileList"
-                      name="avatar"
+                      v-model="modelRef.image"
+                      name="image"
                       list-type="picture-card"
                       class="avatar-uploader"
                       :show-upload-list="false"
-                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       :before-upload="beforeUpload"
                       @change="handleChange"
                     >
@@ -141,15 +126,22 @@ function getBase64(img: Blob, callback: (base64Url: string) => void) {
   reader.readAsDataURL(img);
 }
 const useForm = Form.useForm;
+const router = useRouter();
 export default defineComponent({
   components: {
     PlusOutlined,
     LoadingOutlined,
   },
   setup() {
+    const route = useRoute();
+    const api = useApi();
     const modelRef = reactive({
+      id: '',
       name: '',
-      region: undefined,
+      price: '',
+      stock: '',
+      image: '',
+      //   imageUrl: '',
     });
     const rulesRef = reactive({
       name: [
@@ -159,8 +151,8 @@ export default defineComponent({
         },
         {
           min: 3,
-          max: 5,
-          message: 'Length should be 3 to 5',
+          max: 10,
+          message: 'Length should be 3 to 10  ',
           trigger: 'blur',
         },
       ],
@@ -174,8 +166,18 @@ export default defineComponent({
     const { validate, validateInfos } = useForm(modelRef, rulesRef);
     const onSubmit = () => {
       validate()
-        .then(() => {
-          console.log(toRaw(modelRef));
+        .then(async () => {
+          const formData = new FormData();
+          const { name, price, stock, image, id } = modelRef;
+          formData.append('id', id);
+          formData.append('name', name);
+          formData.append('stock', stock.toString());
+          formData.append('price', price.toString());
+          if (image) {
+            formData.append('image', image!);
+          }
+          await api.updateProduct(formData);
+          router.back();
         })
         .catch((err) => {
           console.log('error', err);
@@ -216,12 +218,21 @@ export default defineComponent({
       return isJpgOrPng && isLt2M;
     };
 
+    onMounted(async () => {
+      const result = await api.getProductById(route.params.id);
+      modelRef.id = result.id;
+      modelRef.name = result.name;
+      modelRef.price = result.price;
+      modelRef.stock = result.stock;
+      modelRef.image = result.image;
+      imageUrl.value = getFullImagePath(result.image) as any;
+    });
+
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 10 },
       validate,
       validateInfos,
-
       modelRef,
       onSubmit,
       imageUrl,

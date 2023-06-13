@@ -23,8 +23,12 @@
                 <a-auto-complete
                   size="large"
                   class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all"
-                  v-model="searchKeyword"
-                  :options="options"
+                  :options="autoCompleteOptions"
+                  @search="debouncedSearch"
+                  @select="onSelect"
+                  :default-active-first-option="false"
+                  :filter-option="false"
+                  :loading="storeStock.isLoading"
                 >
                   <template #placeholder>
                     <SearchOutlined /> Input search text</template
@@ -48,6 +52,7 @@
           <!-- TABLE -->
           <a-col :span="24">
             <StockTable
+              :stocks="stocks"
               @handleClickDelete="handleClickDelete"
               @handleClickEdit="handleClickEdit"
             />
@@ -66,6 +71,7 @@
         <template #footer>
           <a-button @click="handleOk">Cancel</a-button>
           <a-button
+            type="danger"
             html-type="submit"
             :loading="isLoading"
             @click="handleConfirmDelete"
@@ -80,19 +86,25 @@
 import StockCard from '~/components/stock/Card.vue';
 import StockTable from '~/components/stock/Table.vue';
 import { DeleteOutlined } from '@ant-design/icons-vue';
+import { useStockStore } from '~/stores/useStock';
+import { Product } from '~/models/product.model';
 import {
   SearchOutlined,
   ShoppingCartOutlined,
   GiftOutlined,
   RollbackOutlined,
 } from '@ant-design/icons-vue';
-import { useCounter } from '~/stores/useCounter';
-import { Modal, message } from 'ant-design-vue';
+import { debounce } from 'lodash';
+import { message } from 'ant-design-vue';
+import { FetchingStatus } from '~/models/FetchingStatus';
 definePageMeta({
   layout: 'default',
 });
+
+const storeStock = useStockStore();
 const router = useRouter();
 const visible = ref<boolean>(false);
+const deleteProductId = ref();
 const stockCardList = ref([
   {
     title: 'Total',
@@ -109,32 +121,93 @@ const stockCardList = ref([
     color: '#0D2818',
   },
 ]);
+const stocks = ref([]);
 const isLoading = ref(false);
-const searchKeyword = ref('');
-const options = ref([
-  { value: 'Option 1' },
-  { value: 'Option 1' },
-  { value: 'Option 1' },
-]);
-
-const handleConfirmDelete = () => {
+const autoCompleteOptions = ref([]);
+const api = useApi();
+onMounted(async () => {
   isLoading.value = true;
+  stocks.value = await api.getProducts();
+  isLoading.value = false;
+});
+
+const loadProducts = async () => {
+  storeStock.setLoading(FetchingStatus.fetching);
+  try {
+    const res = await api.getProducts();
+    stocks.value = res;
+  } catch (error) {
+    stocks.value = [];
+  } finally {
+    storeStock.setLoading(FetchingStatus.success);
+  }
+};
+
+const onSelect = async (value: any) => {
+  storeStock.setLoading(FetchingStatus.fetching);
+  try {
+    if (value) {
+      const result = await api.getProductByKeyword(value);
+      stocks.value = result;
+    } else {
+      await loadProducts();
+    }
+  } finally {
+    storeStock.setLoading(FetchingStatus.success);
+  }
+};
+
+const handleConfirmDelete = async () => {
+  isLoading.value = true;
+  await api.deleteProduct(deleteProductId.value);
+
+  stocks.value = await api.getProducts();
   message.success('Delete successfully');
   visible.value = false;
   isLoading.value = false;
+  deleteProductId.value = null;
 };
-const handleClickDelete = () => {
+const handleClickDelete = (id: number) => {
+  deleteProductId.value = id;
   visible.value = true;
 };
 const handleOk = (e: MouseEvent) => {
-  console.log(e);
   visible.value = false;
 };
 const handleClickEdit = (id: number) => {
-  router.push(`/stock/${id}`);
+  router.push(`/stock/edit/${id}`);
 };
+
+const debouncedSearch = debounce(async (value: string) => {
+  storeStock.setLoading(FetchingStatus.fetching);
+  try {
+    if (value) {
+      const result = await api.getProductByKeyword(value);
+      stocks.value = result;
+      autoCompleteOptions.value = result.map((product: any) => ({
+        value: product.name,
+      }));
+    } else {
+      await loadProducts();
+    }
+  } finally {
+    storeStock.setLoading(FetchingStatus.success);
+  }
+}, 500); // Adjust the debounce delay as needed
+
 const routeToEdit = () => {
   router.push('/stock/create');
 };
+
+watch(
+  stocks,
+  () => {
+    // Update autocomplete options when stocks change
+    autoCompleteOptions.value = stocks.value.map((product: Product) => ({
+      value: product.name,
+    })) as any;
+  },
+  { deep: true }
+);
 </script>
 <style scoped></style>
