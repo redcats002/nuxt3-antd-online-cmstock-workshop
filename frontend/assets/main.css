@@ -1,0 +1,4 @@
+/* FOR FIX a-image is not centered */
+img.ant-image-preview-img {
+    display: inline-block;
+  }
