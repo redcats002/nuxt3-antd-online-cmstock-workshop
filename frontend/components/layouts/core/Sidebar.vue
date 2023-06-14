@@ -1,8 +1,10 @@
 <template>
   <a-layout-sider
-    v-model:collapsed="collapsed"
     collapsible
+    v-model:collapsed="collapsed"
     class="tw-bg-white tw-drop-shadow-md"
+    breakpoint="xl"
+    @collapse="onCollapse"
   >
     <div class="logo tw-h-[100px] tw-w-[100px]" />
     <a-menu
@@ -60,7 +62,13 @@ export default defineComponent({
     FileOutlined,
     StockOutlined,
   },
-  setup() {
+  props: {
+    collapsed: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props, { emit }) {
     const collapsed = ref<boolean>(false);
     const selectedKeys = ref<string[]>(['1']);
     const menuList = reactive([
@@ -98,10 +106,17 @@ export default defineComponent({
       },
       { name: 'About', to: '/about', icon: InfoCircleFilled, isSub: false },
     ]);
+
+    const onCollapse = (collapsed: boolean, type: string) => {
+      if (type == 'responsive') {
+        emit('update:collapsed', !props.collapsed);
+      }
+    };
     return {
       collapsed,
       selectedKeys,
       menuList,
+      onCollapse,
     };
   },
 });

@@ -11,11 +11,20 @@
       <a-tag
         color="error"
         class="tw-rounded-lg tw-px-4 tw-cursor-pointer"
-        @click="$router.push('/login')"
+        @click="authStore.logout"
       >
         <span class="tw-font-bold tw-text-xl">Logout</span>
       </a-tag>
     </a-row>
   </a-layout-header>
 </template>
-<script setup lang="ts"></script>
+<script lang="ts">
+import { useAuth } from '~/stores/useAuth';
+
+export default defineComponent({
+  setup() {
+    const authStore = useAuth();
+    return { authStore };
+  },
+});
+</script>
