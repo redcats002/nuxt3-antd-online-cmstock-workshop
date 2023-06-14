@@ -4,7 +4,8 @@ import { useFetcher } from '~/composables/useFetcher'
 
 const { fetch } = useFetcher()
 
-const login = async (values: User) => {
+export const login = async (values: User) => {
+
     const result = await fetch(server.LOGIN_URL,
         {
             method: 'POST',
@@ -14,17 +15,18 @@ const login = async (values: User) => {
             body: JSON.stringify(values)
         }
     )
-    if (result.data.result == 'ok') {
+   
+
+    if (result.result == 'ok') {
         localStorage.setItem(server.USERNAME, values.username)
-        localStorage.setItem(server.TOKEN_KEY, result.data.token)
-        navigateTo('/stock')
+        localStorage.setItem(server.TOKEN_KEY, 'DUMB token')
+        // navigateTo('/stock')
         return true
     }
-    // alert('Login Failed')
     return false
 }
 
-const register = async (values: User) => {
+export const register = async (values: User) => {
     const result = await fetch(server.REGISTER_URL, {
         method: 'POST',
         headers: {
@@ -32,14 +34,10 @@ const register = async (values: User) => {
         },
         body: JSON.stringify(values)
     })
-    if (result.data.result == 'ok') {
-        navigateTo('/login')
+    if (result.result == 'ok') {
+        // navigateTo('/login')
         return true
     }
     return false
 }
 
-export default {
-    login,
-    register
-}
