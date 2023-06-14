@@ -23,12 +23,11 @@
                 <a-auto-complete
                   size="large"
                   class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all"
-                  :options="autoCompleteOptions"
-                  @search="debouncedSearch"
-                  @select="onSelect"
+                  :options="stockStore.autoCompleteOptions"
+                  @search="stockStore.debouncedSearch"
+                  @select="stockStore.onSelect"
                   :default-active-first-option="false"
                   :filter-option="false"
-                  :loading="storeStock.isLoading"
                 >
                   <template #placeholder>
                     <SearchOutlined /> Input search text</template
@@ -37,7 +36,7 @@
               </a-col>
               <a-col :span="2">
                 <a-button
-                  @click="routeToEdit"
+                  @click="$router.push('/stock/create')"
                   icon
                   class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all"
                   :shape="'round'"
@@ -52,7 +51,7 @@
           <!-- TABLE -->
           <a-col :span="24">
             <StockTable
-              :stocks="stocks"
+              :stocks="stockStore.stocks"
               @handleClickDelete="handleClickDelete"
               @handleClickEdit="handleClickEdit"
             />
@@ -73,7 +72,7 @@
           <a-button
             type="danger"
             html-type="submit"
-            :loading="isLoading"
+            :loading="stockStore.isLoading()"
             @click="handleConfirmDelete"
             >Delete</a-button
           >
@@ -87,21 +86,19 @@ import StockCard from '~/components/stock/Card.vue';
 import StockTable from '~/components/stock/Table.vue';
 import { DeleteOutlined } from '@ant-design/icons-vue';
 import { useStockStore } from '~/stores/useStock';
-import { Product } from '~/models/product.model';
 import {
   SearchOutlined,
   ShoppingCartOutlined,
   GiftOutlined,
   RollbackOutlined,
 } from '@ant-design/icons-vue';
-import { debounce } from 'lodash';
 import { message } from 'ant-design-vue';
 import { FetchingStatus } from '~/models/FetchingStatus';
 definePageMeta({
   layout: 'default',
 });
 
-const storeStock = useStockStore();
+const stockStore = useStockStore();
 const router = useRouter();
 const visible = ref<boolean>(false);
 const deleteProductId = ref();
@@ -121,50 +118,21 @@ const stockCardList = ref([
     color: '#0D2818',
   },
 ]);
-const stocks = ref([]);
-const isLoading = ref(false);
-const autoCompleteOptions = ref([]);
+
 const api = useApi();
 onMounted(async () => {
-  isLoading.value = true;
-  stocks.value = await api.getProducts();
-  isLoading.value = false;
+  stockStore.setLoading(FetchingStatus.fetching);
+  stockStore.loadProducts();
+  stockStore.setLoading(FetchingStatus.success);
 });
 
-const loadProducts = async () => {
-  storeStock.setLoading(FetchingStatus.fetching);
-  try {
-    const res = await api.getProducts();
-    stocks.value = res;
-  } catch (error) {
-    stocks.value = [];
-  } finally {
-    storeStock.setLoading(FetchingStatus.success);
-  }
-};
-
-const onSelect = async (value: any) => {
-  storeStock.setLoading(FetchingStatus.fetching);
-  try {
-    if (value) {
-      const result = await api.getProductByKeyword(value);
-      stocks.value = result;
-    } else {
-      await loadProducts();
-    }
-  } finally {
-    storeStock.setLoading(FetchingStatus.success);
-  }
-};
-
 const handleConfirmDelete = async () => {
-  isLoading.value = true;
+  stockStore.setLoading(FetchingStatus.fetching);
   await api.deleteProduct(deleteProductId.value);
-
-  stocks.value = await api.getProducts();
+  await stockStore.loadProducts();
   message.success('Delete successfully');
   visible.value = false;
-  isLoading.value = false;
+  stockStore.setLoading(FetchingStatus.success);
   deleteProductId.value = null;
 };
 const handleClickDelete = (id: number) => {
@@ -177,37 +145,5 @@ const handleOk = (e: MouseEvent) => {
 const handleClickEdit = (id: number) => {
   router.push(`/stock/edit/${id}`);
 };
-
-const debouncedSearch = debounce(async (value: string) => {
-  storeStock.setLoading(FetchingStatus.fetching);
-  try {
-    if (value) {
-      const result = await api.getProductByKeyword(value);
-      stocks.value = result;
-      autoCompleteOptions.value = result.map((product: any) => ({
-        value: product.name,
-      }));
-    } else {
-      await loadProducts();
-    }
-  } finally {
-    storeStock.setLoading(FetchingStatus.success);
-  }
-}, 500); // Adjust the debounce delay as needed
-
-const routeToEdit = () => {
-  router.push('/stock/create');
-};
-
-watch(
-  stocks,
-  () => {
-    // Update autocomplete options when stocks change
-    autoCompleteOptions.value = stocks.value.map((product: Product) => ({
-      value: product.name,
-    })) as any;
-  },
-  { deep: true }
-);
 </script>
 <style scoped></style>

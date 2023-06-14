@@ -79,12 +79,14 @@
                       list-type="picture-card"
                       class="avatar-uploader"
                       :show-upload-list="false"
-                      :before-upload="beforeUpload"
-                      @change="handleChange"
+                      :before-upload="stockStore.beforeUpload"
+                      @change="handleUploadChange"
                     >
                       <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
                       <div v-else>
-                        <loading-outlined v-if="loading"></loading-outlined>
+                        <loading-outlined
+                          v-if="stockStore.isLoading()"
+                        ></loading-outlined>
                         <plus-outlined v-else></plus-outlined>
                         <div class="ant-upload-text">Upload</div>
                       </div>
@@ -100,6 +102,7 @@
                       >
 
                       <a-button
+                        :loading="stockStore.isLoading()"
                         type="primary"
                         class="tw-ml-2"
                         @click.prevent="onSubmit"
@@ -120,46 +123,57 @@
 import { defineComponent, reactive, toRaw } from 'vue';
 import { Form, UploadChangeParam, UploadProps, message } from 'ant-design-vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
-function getBase64(img: Blob, callback: (base64Url: string) => void) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result as string));
-  reader.readAsDataURL(img);
-}
-const useForm = Form.useForm;
-const router = useRouter();
+import { useStockStore } from '~/stores/useStock';
+import { FetchingStatus } from '~/models/FetchingStatus';
+
 export default defineComponent({
   components: {
     PlusOutlined,
     LoadingOutlined,
   },
   setup() {
+    const stockStore = useStockStore();
+    const useForm = Form.useForm;
+    const router = useRouter();
     const route = useRoute();
     const api = useApi();
+    const imageUrl = ref<string>('');
     const modelRef = reactive({
       id: '',
       name: '',
       price: '',
       stock: '',
       image: '',
-      //   imageUrl: '',
     });
     const rulesRef = reactive({
       name: [
         {
           required: true,
-          message: 'Please input Activity name',
+          message: 'Please input name',
         },
         {
           min: 3,
-          max: 10,
-          message: 'Length should be 3 to 10  ',
+          max: 5,
+          message: 'Length should be 3 to 5',
           trigger: 'blur',
         },
       ],
-      region: [
+      price: [
         {
           required: true,
-          message: 'Please select region',
+          message: 'Please input price',
+        },
+      ],
+      stock: [
+        {
+          required: true,
+          message: 'Please input amount of stock',
+        },
+      ],
+      image: [
+        {
+          required: true,
+          message: 'Please select image',
         },
       ],
     });
@@ -183,39 +197,9 @@ export default defineComponent({
           console.log('error', err);
         });
     };
-    const fileList = ref([]);
-    const loading = ref<boolean>(false);
-    const imageUrl = ref<string>('');
 
-    const handleChange = (info: UploadChangeParam) => {
-      if (info.file.status === 'uploading') {
-        loading.value = true;
-        return;
-      }
-      if (info.file.status === 'done') {
-        // Get this url from response in real world.
-        getBase64(info.file.originFileObj!, (base64Url: string) => {
-          imageUrl.value = base64Url;
-          loading.value = false;
-        });
-      }
-      if (info.file.status === 'error') {
-        loading.value = false;
-        message.error('upload error');
-      }
-    };
-
-    const beforeUpload = (file: any) => {
-      const isJpgOrPng =
-        file.type === 'image/jpeg' || file.type === 'image/png';
-      if (!isJpgOrPng) {
-        message.error('You can only upload JPG file!');
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-      }
-      return isJpgOrPng && isLt2M;
+    const handleUploadChange = (info: UploadChangeParam) => {
+      imageUrl.value = stockStore.handleChange(info) as any;
     };
 
     onMounted(async () => {
@@ -236,10 +220,9 @@ export default defineComponent({
       modelRef,
       onSubmit,
       imageUrl,
-      loading,
-      handleChange,
-      fileList,
-      beforeUpload,
+
+      stockStore,
+      handleUploadChange,
     };
   },
 });

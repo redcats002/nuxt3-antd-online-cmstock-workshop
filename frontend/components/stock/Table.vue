@@ -1,11 +1,12 @@
 <template>
-  <a-table :columns="columns" :data-source="props.stocks">
+  <a-table
+    :columns="columns"
+    :data-source="props.stocks"
+    :loading="stockStore.isLoading()"
+  >
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
-        <span>
-          <!-- <smile-outlined /> -->
-          Name
-        </span>
+        <span> Name </span>
       </template>
     </template>
 
@@ -61,6 +62,7 @@ import {
 } from '@ant-design/icons-vue';
 
 import { defineComponent } from 'vue';
+import { useStockStore } from '~/stores/useStock';
 const columns = [
   {
     title: 'Image',
@@ -123,6 +125,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const dayjs = useDayjs();
+    const stockStore = useStockStore();
     const handleClickEdit = (id: number) => {
       emit('handleClickEdit', id);
     };
@@ -136,6 +139,7 @@ export default defineComponent({
       handleClickDelete,
       handleClickEdit,
       props,
+      stockStore,
     };
   },
 });
