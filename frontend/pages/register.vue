@@ -9,7 +9,7 @@
     <a-card-meta class="tw-mb-4">
       <template #title>
         <a-row align="center" justify="center">
-          <span class="tw-font-bold tw-text-xl">Login</span>
+          <span class="tw-font-bold tw-text-xl">Register</span>
         </a-row>
       </template>
     </a-card-meta>
@@ -43,16 +43,15 @@
           html-type="submit"
           @click.prevent="onSubmit"
           :loading="authStore.isLoading()"
-          >Login</a-button
+          >Confirm</a-button
         >
         <a-button
           type="primary"
           ghost
           class="tw-w-full tw-mb-2"
-          @click="$router.push('/register')"
-          >Register</a-button
+          @click="$router.push('/login')"
+          >Cancel</a-button
         >
-        <a-button class="tw-w-full" @click="resetFields">Reset</a-button>
       </a-form-item>
     </a-form>
   </a-card>
@@ -76,8 +75,8 @@ export default defineComponent({
     const useForm = Form.useForm;
     const authStore = useAuth();
     const modelRef = reactive({
-      username: '',
-      password: '',
+      username: 'admin',
+      password: '1234',
     });
     const rulesRef = reactive({
       username: [
@@ -103,17 +102,12 @@ export default defineComponent({
     const onSubmit = () => {
       validate()
         .then(async () => {
-          await authStore.login(toRaw(modelRef));
+          await authStore.register(toRaw(modelRef));
         })
         .catch((err) => {
           console.log('error', err);
         });
     };
-
-    onMounted(() => {
-      modelRef.username = 'admin';
-      modelRef.password = '1234';
-    });
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },

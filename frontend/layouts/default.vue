@@ -1,6 +1,6 @@
 <template>
   <a-layout style="min-height: 100vh">
-    <LayoutsCoreSidebar></LayoutsCoreSidebar>
+    <LayoutsCoreSidebar v-model:collapsed="collapsed"></LayoutsCoreSidebar>
     <a-layout>
       <LayoutsCoreHeader></LayoutsCoreHeader>
       <!-- <LayoutsCoreContent></LayoutsCoreContent> -->
@@ -13,5 +13,19 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-export default defineComponent({});
+import { useAuth } from '~/stores/useAuth';
+export default defineComponent({
+  setup() {
+    const selectedKeys = ref<string[]>(['1']);
+    const collapsed = ref<boolean>(false);
+    const authStore = useAuth();
+    onMounted(() => {
+      authStore.restoreSession();
+    });
+    return {
+      selectedKeys,
+      collapsed,
+    };
+  },
+});
 </script>

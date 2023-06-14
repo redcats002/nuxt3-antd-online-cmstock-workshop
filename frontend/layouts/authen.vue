@@ -9,5 +9,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-export default defineComponent({});
+import { useAuth } from '~/stores/useAuth';
+export default defineComponent({
+  setup() {
+    const authStore = useAuth();
+    onMounted(() => {
+      authStore.restoreSession();
+    });
+  },
+});
 </script>
