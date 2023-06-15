@@ -3,6 +3,9 @@
     :columns="columns"
     :data-source="props.stocks"
     :loading="stockStore.isLoading()"
+    :scroll="{
+      x: 200,
+    }"
   >
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
@@ -12,14 +15,14 @@
 
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
-        <a>
+        <a @click="handleClickEdit(record.id)">
           {{ record.name }}
         </a>
       </template>
       <template v-if="column.key === 'image'">
         <a-image
           :src="getFullImagePath(record.image)"
-          height="50px"
+          height="35px"
           class="tw-object-contain"
         />
       </template>

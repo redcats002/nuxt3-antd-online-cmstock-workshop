@@ -11,11 +11,6 @@
 import { defineComponent, ref } from 'vue';
 import { useAuth } from '~/stores/useAuth';
 export default defineComponent({
-  setup() {
-    const authStore = useAuth();
-    onMounted(() => {
-      authStore.restoreSession();
-    });
-  },
+  setup() {},
 });
 </script>

@@ -1,9 +1,14 @@
 <template>
-  <a-row :gutter="[4, 4]">
+  <a-row :gutter="[0, 10]" class="tw-p-5">
     <a-col :span="24" class="tw-my-1 tw-mt-2">
       <!-- STOCK-CARD -->
-      <a-row :gutter="[10, 10]" align="center" justify="center">
-        <a-col :span="6" v-for="(item, i) in stockCardList" :key="i">
+      <a-row
+        :gutter="[0, 10]"
+        align="center"
+        justify="center"
+     
+      >
+        <a-col :span="6" v-for="(item, i) in stockCardList" :key="i" class="tw-pr-2">
           <StockCard
             :title="item.title"
             :amount="item.amount"
@@ -15,10 +20,10 @@
     </a-col>
     <a-col :span="24" class="tw-my-1">
       <a-card class="tw-w-full tw-min-h-[75vh] tw-rounded-lg tw-drop-shadow-md">
-        <a-row align="center" justify="center" :gutter="[10, 10]">
+        <a-row align="center" justify="center" :gutter="[0, 10]">
           <!-- Search bar -->
           <a-col :span="24">
-            <a-row justify="space-between" :gutter="[10, 10]">
+            <a-row justify="space-between" :gutter="[0, 10]">
               <a-col :span="22">
                 <a-auto-complete
                   size="large"
@@ -37,13 +42,14 @@
               <a-col :span="2">
                 <a-button
                   @click="$router.push('/stock/create')"
-                  icon
-                  class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all"
-                  :shape="'round'"
+                  class="tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all tw-flex tw-items-center"
+                  :shape="!breakpointState.sm ? 'circle' : 'rounded'"
                   :size="'large'"
                   type="primary"
                 >
-                  NEW
+                  <span v-if="breakpointState.sm"> NEW </span>
+
+                  <template #icon> <PlusCircleFilled /></template>
                 </a-button>
               </a-col>
             </a-row>
@@ -64,7 +70,7 @@
         <p class="tw-font-medium">
           <a-row align="start" class="tw-items-center">
             <DeleteOutlined class="tw-mr-2 tw-text-red-500" spin /> Are you sure
-            delete this task?
+            delete this product?
           </a-row>
         </p>
         <template #footer>
@@ -74,8 +80,8 @@
             html-type="submit"
             :loading="stockStore.isLoading()"
             @click="handleConfirmDelete"
-            >Delete</a-button
-          >
+            >Delete
+          </a-button>
         </template>
       </a-modal>
     </a-col>
@@ -84,24 +90,28 @@
 <script lang="ts" setup>
 import StockCard from '~/components/stock/Card.vue';
 import StockTable from '~/components/stock/Table.vue';
-import { DeleteOutlined } from '@ant-design/icons-vue';
 import { useStockStore } from '~/stores/useStock';
 import {
   SearchOutlined,
   ShoppingCartOutlined,
   GiftOutlined,
   RollbackOutlined,
+  PlusCircleFilled,
+  DeleteOutlined,
 } from '@ant-design/icons-vue';
-import { message } from 'ant-design-vue';
+import { Grid, message } from 'ant-design-vue';
 import { FetchingStatus } from '~/models/FetchingStatus';
+import { useAuth } from '~/stores/useAuth';
+const { useBreakpoint } = Grid;
 definePageMeta({
   layout: 'default',
 });
-
+const breakpointState = useBreakpoint();
 const stockStore = useStockStore();
 const router = useRouter();
 const visible = ref<boolean>(false);
 const deleteProductId = ref();
+const api = useApi();
 const stockCardList = ref([
   {
     title: 'Total',
@@ -119,7 +129,6 @@ const stockCardList = ref([
   },
 ]);
 
-const api = useApi();
 onMounted(async () => {
   stockStore.setLoading(FetchingStatus.fetching);
   stockStore.loadProducts();
