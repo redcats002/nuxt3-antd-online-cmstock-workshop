@@ -7,9 +7,9 @@ export const useAuth = () => {
     const fetchingStatus = ref<FetchingStatus>(FetchingStatus.init);
     const session = reactive<Session>({ isLoggedIn: false })
     const api = useApi()
-    const router = useRouter()
-    
+
     const restoreSession = () => {
+        console.log('restoring session')
         const token = localStorage.getItem(server.TOKEN_KEY)
         const username = localStorage.getItem(server.USERNAME)
 
@@ -19,6 +19,7 @@ export const useAuth = () => {
         } else {
             session.isLoggedIn = false
         }
+        console.log(session)
     }
 
 
@@ -34,13 +35,16 @@ export const useAuth = () => {
                 session.isLoggedIn = true
                 fetchingStatus.value = FetchingStatus.success
                 message.success('Login successful')
-                router.push('/stock')
+                return await navigateTo('/stock', { redirectCode: 301, },)
+
 
             } else {
                 session.isLoggedIn = false
                 fetchingStatus.value = FetchingStatus.failed
                 message.error('Login Failed')
             }
+            console.log('login success')
+            console.log(session)
 
         } catch (e) {
             session.isLoggedIn = false
@@ -57,7 +61,7 @@ export const useAuth = () => {
             if (result == true) {
                 fetchingStatus.value = FetchingStatus.success
                 message.success('Register successful')
-                router.push('/login')
+                return await navigateTo('/login', { redirectCode: 301, },)
 
             } else {
                 fetchingStatus.value = FetchingStatus.failed
@@ -69,12 +73,12 @@ export const useAuth = () => {
         }
     }
 
-    const logout = () => {
+    const logout = async () => {
         localStorage.clear()
         session.isLoggedIn = undefined as any
         session.username = undefined
         message.success('Logout successful')
-        router.push('/login')
+        return await navigateTo('/login', { redirectCode: 301, },)
 
     }
 

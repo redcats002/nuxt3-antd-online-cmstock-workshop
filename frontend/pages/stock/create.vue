@@ -132,6 +132,9 @@ export default defineComponent({
     LoadingOutlined,
   },
   setup() {
+    definePageMeta({
+      layout: 'default',
+    });
     const useForm = Form.useForm;
     const api = useApi();
     const stockStore = useStockStore();

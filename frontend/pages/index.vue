@@ -1,15 +1,10 @@
 <template>
   <div><a-skeleton /></div>
 </template>
-<script lang="ts">
-defineComponent({
-  setup() {
-      
+<script lang="ts" setup>
+import { useAuth } from '~/stores/useAuth';
 
-    const router = useRouter();
-    onMounted(() => {
-      router.push('/stock');
-    });
-  },
+definePageMeta({
+  layout: 'default',
 });
 </script>

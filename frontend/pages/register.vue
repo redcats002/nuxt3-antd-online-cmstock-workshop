@@ -62,16 +62,15 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { Form } from 'ant-design-vue';
 import { useAuth } from '~/stores/useAuth';
 
-definePageMeta({
-  layout: 'authen',
-});
-
 export default defineComponent({
   components: {
     LockOutlined,
     UserOutlined,
   },
   setup() {
+    definePageMeta({
+      layout: 'authen',
+    });
     const useForm = Form.useForm;
     const authStore = useAuth();
     const modelRef = reactive({
