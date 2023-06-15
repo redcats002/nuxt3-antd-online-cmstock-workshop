@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
+
+.shadow-card{
+    @apply tw-w-[500px] tw-h-[500px] tw-drop-shadow-md hover:tw-drop-shadow-md tw-transition-all tw-rounded-lg
+}
+
 @tailwind utilities;
