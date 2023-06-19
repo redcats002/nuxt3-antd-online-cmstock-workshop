@@ -131,7 +131,7 @@ const stockCardList = ref([
 
 onMounted(async () => {
   stockStore.setLoading(FetchingStatus.fetching);
-  stockStore.loadProducts();
+  await stockStore.loadProducts();
   stockStore.setLoading(FetchingStatus.success);
 });
 

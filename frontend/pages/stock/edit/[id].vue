@@ -144,6 +144,7 @@ import { Form, UploadChangeParam, UploadProps, message } from "ant-design-vue";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons-vue";
 import { useStockStore } from "~/stores/useStock";
 import { FetchingStatus } from "~/models/FetchingStatus";
+import { Product } from "~/models/product.model";
 
 export default defineComponent({
   components: {
@@ -237,12 +238,11 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      console.log(modelRef.image);
-      const result = await api.getProductById(route.params.id);
+      const result = (await api.getProductById(route.params.id)) as Product;
       modelRef.id = result.id;
       modelRef.name = result.name;
-      modelRef.price = result.price;
-      modelRef.stock = result.stock;
+      modelRef.price = result.price.toString();
+      modelRef.stock = result.stock.toString();
       modelRef.image = result.image;
       previewImageUrl.value = getFullImagePath(result.image) as any;
     });
