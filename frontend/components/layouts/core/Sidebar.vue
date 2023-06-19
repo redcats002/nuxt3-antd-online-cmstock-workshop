@@ -116,7 +116,7 @@ export default defineComponent({
         ],
         isSub: true,
       },
-      { name: "About", to: "/", icon: InfoCircleFilled, isSub: false },
+      { name: "About", to: "/about", icon: InfoCircleFilled, isSub: false },
     ];
 
     const onCollapse = (collapsed: boolean, type: string) => {
@@ -145,6 +145,9 @@ export default defineComponent({
   border-radius: 5px;
 }
 
+.ant-menu-sub.ant-menu-vertical {
+  background-color: #001e26 !important;
+}
 .ant-menu-sub.ant-menu-inline {
   background-color: transparent !important;
 }
@@ -153,7 +156,7 @@ export default defineComponent({
 .ant-menu-vertical-left .ant-menu-item::after,
 .ant-menu-vertical-right .ant-menu-item::after,
 .ant-menu-inline .ant-menu-item::after {
-  border-color: white;
+  border-color: white !important;
 }
 
 .ant-menu-submenu-arrow {
