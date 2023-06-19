@@ -1,9 +1,10 @@
 <template>
-  <a-card hoverable type="inner">
+  <a-card hoverable type="inner" class="tw-rounded-lg">
     <template #cover>
       <img
         alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src="~/assets/images/nuxt3.png"
+        class="tw-h-[200px] tw-object-cover tw-object-center tw-rounded-lg"
       />
     </template>
     <a-card-meta class="tw-mb-4">
@@ -18,15 +19,20 @@
       :wrapper-col="wrapperCol"
       class="tw-w-[420px]"
     >
-      <a-form-item label="Username" v-bind="validateInfos.username">
-        <a-input v-model:value="modelRef.username" placeholder="Username">
+      <a-form-item v-bind="validateInfos.username">
+        <a-input
+          v-model:value="modelRef.username"
+          placeholder="Username"
+          size="large"
+        >
           <template #prefix>
             <UserOutlined class="tw-opacity-50"></UserOutlined>
           </template>
         </a-input>
       </a-form-item>
-      <a-form-item label="Password" v-bind="validateInfos.password">
+      <a-form-item v-bind="validateInfos.password">
         <a-input-password
+          size="large"
           v-model:value="modelRef.password"
           placeholder="Password"
         >
@@ -36,31 +42,33 @@
         </a-input-password>
       </a-form-item>
 
-      <a-form-item :wrapper-col="{ span: 14, offset: 6 }">
+      <a-form-item>
         <a-button
-          class="tw-w-full tw-mb-2"
+          size="large"
+          shape="round"
+          class="tw-w-full tw-mb-5 tw-bg-[#00dc82] tw-text-white"
           type="primary"
           html-type="submit"
           @click.prevent="onSubmit"
           :loading="authStore.isLoading()"
-          >Confirm</a-button
+          >Register</a-button
         >
         <a-button
-          type="primary"
-          ghost
+          size="large"
+          shape="round"
           class="tw-w-full tw-mb-2"
           @click="$router.push('/login')"
-          >Cancel</a-button
+          >Back to Login</a-button
         >
       </a-form-item>
     </a-form>
   </a-card>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRaw } from 'vue';
-import { LockOutlined, UserOutlined } from '@ant-design/icons-vue';
-import { Form } from 'ant-design-vue';
-import { useAuth } from '~/stores/useAuth';
+import { defineComponent, reactive, toRaw } from "vue";
+import { LockOutlined, UserOutlined } from "@ant-design/icons-vue";
+import { Form } from "ant-design-vue";
+import { useAuth } from "~/stores/useAuth";
 
 export default defineComponent({
   components: {
@@ -69,25 +77,25 @@ export default defineComponent({
   },
   setup() {
     definePageMeta({
-      layout: 'authen',
+      layout: "authen",
     });
     const useForm = Form.useForm;
     const authStore = useAuth();
     const modelRef = reactive({
-      username: 'admin',
-      password: '1234',
+      username: "",
+      password: "",
     });
     const rulesRef = reactive({
       username: [
         {
           required: true,
-          message: 'Please input username',
+          message: "Please input username",
         },
       ],
       password: [
         {
           required: true,
-          message: 'Please input password',
+          message: "Please input password",
         },
       ],
     });
@@ -104,12 +112,12 @@ export default defineComponent({
           await authStore.register(toRaw(modelRef));
         })
         .catch((err) => {
-          console.log('error', err);
+          console.log("error", err);
         });
     };
     return {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 0 },
+      wrapperCol: { span: 24 },
       validateInfos,
       resetFields,
       modelRef,

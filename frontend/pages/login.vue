@@ -1,16 +1,16 @@
 <template>
-  <a-card hoverable type="inner">
+  <a-card hoverable type="inner" class="tw-rounded-lg">
     <template #cover>
       <img
         alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        src="~/assets/images/nuxt3.png"
+        class="tw-h-[200px] tw-object-cover tw-object-center tw-rounded-lg"
       />
     </template>
     <a-card-meta class="tw-mb-4">
       <template #title>
-        <a-row align="center" justify="center">
-          <span class="tw-font-bold tw-text-xl">Login</span>
-        </a-row>
+        <span class="tw-font-bold tw-text-2xl tw-tracking-wider">Login</span>
+        <a-divider class="tw-my-4"></a-divider>
       </template>
     </a-card-meta>
     <a-form
@@ -18,15 +18,20 @@
       :wrapper-col="wrapperCol"
       class="tw-w-[420px]"
     >
-      <a-form-item label="Username" v-bind="validateInfos.username">
-        <a-input v-model:value="modelRef.username" placeholder="Username">
+      <a-form-item v-bind="validateInfos.username">
+        <a-input
+          v-model:value="modelRef.username"
+          placeholder="Username"
+          size="large"
+        >
           <template #prefix>
             <UserOutlined class="tw-opacity-50"></UserOutlined>
           </template>
         </a-input>
       </a-form-item>
-      <a-form-item label="Password" v-bind="validateInfos.password">
+      <a-form-item v-bind="validateInfos.password">
         <a-input-password
+          size="large"
           v-model:value="modelRef.password"
           placeholder="Password"
         >
@@ -36,32 +41,42 @@
         </a-input-password>
       </a-form-item>
 
-      <a-form-item :wrapper-col="{ span: 14, offset: 6 }">
+      <a-form-item>
         <a-button
-          class="tw-w-full tw-mb-2"
-          type="primary"
+          size="large"
+          shape="round"
+          class="tw-w-full tw-mb-2 tw-bg-[#00dc82] tw-text-white tw-ring-[#00dc82]"
           html-type="submit"
           @click.prevent="onSubmit"
           :loading="authStore.isLoading()"
           >Login</a-button
         >
+
         <a-button
-          type="primary"
-          ghost
+          size="large"
           class="tw-w-full tw-mb-2"
-          @click="$router.push('/register')"
-          >Register</a-button
+          shape="round"
+          @click="resetFields"
+          >Reset</a-button
         >
-        <a-button class="tw-w-full" @click="resetFields">Reset</a-button>
+
+        <a-button
+          size="large"
+          shape="round"
+          type="link"
+          class="tw-w-full tw-mb-2 tw-text-[#00dc82]"
+          @click="$router.push('/register')"
+          >haven't account yet? please register</a-button
+        >
       </a-form-item>
     </a-form>
   </a-card>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRaw } from 'vue';
-import { LockOutlined, UserOutlined } from '@ant-design/icons-vue';
-import { Form } from 'ant-design-vue';
-import { useAuth } from '~/stores/useAuth';
+import { defineComponent, reactive, toRaw } from "vue";
+import { LockOutlined, UserOutlined } from "@ant-design/icons-vue";
+import { Form } from "ant-design-vue";
+import { useAuth } from "~/stores/useAuth";
 
 export default defineComponent({
   components: {
@@ -70,25 +85,25 @@ export default defineComponent({
   },
   setup() {
     definePageMeta({
-      layout: 'authen',
+      layout: "authen",
     });
     const useForm = Form.useForm;
     const authStore = useAuth();
     const modelRef = reactive({
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     });
     const rulesRef = reactive({
       username: [
         {
           required: true,
-          message: 'Please input username',
+          message: "Please input username",
         },
       ],
       password: [
         {
           required: true,
-          message: 'Please input password',
+          message: "Please input password",
         },
       ],
     });
@@ -105,17 +120,17 @@ export default defineComponent({
           await authStore.login(toRaw(modelRef));
         })
         .catch((err) => {
-          console.log('error', err);
+          console.log("error", err);
         });
     };
 
     onMounted(() => {
-      modelRef.username = 'admin';
-      modelRef.password = '1234';
+      modelRef.username = "admin";
+      modelRef.password = "1234";
     });
     return {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 0 },
+      wrapperCol: { span: 24 },
       validateInfos,
       resetFields,
       modelRef,
