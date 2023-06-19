@@ -2,61 +2,54 @@
   <a-layout-sider
     collapsible
     v-model:collapsed="collapsed"
-    class="tw-bg-white tw-drop-shadow-md"
+    class="tw-bg-[#001e26]"
     breakpoint="xl"
     @collapse="onCollapse"
   >
-    <a-row class="tw-p-4 tw-w-full tw-h-[100px]">
-      <a-tag
-        color="processing"
-        class="tw-h-full tw-w-full tw-text-center tw-text-2xl tw-rounded-lg tw-truncate"
-      >
-        <a-row
-          align="center"
-          justify="center"
-          class="tw-h-full tw-items-center"
-        >
-          <span class="tw-font-bold">Logo</span>
-        </a-row>
-      </a-tag>
+    <a-row class="tw-p-4 tw-w-full">
+      <img
+        alt="example"
+        src="~/assets/images/nuxt3.png"
+        class="tw-object-contain tw-object-center tw-rounded-lg tw-transition-all"
+      />
+      <!-- <span class="tw-font-bold">Logo</span> -->
     </a-row>
     <a-menu
       v-model:selectedKeys="selectedKeys"
-      theme="light"
       mode="inline"
-      class="tw-p-2 tw-rounded-md"
+      class="tw-p-2 tw-rounded-md tw-bg-transparent tw-border-transparent"
     >
       <template v-for="(item, i) in menuList" :key="i">
         <a-menu-item
           v-if="!item.isSub"
           :key="item.to"
           @click="$router.push(item.to!)"
-          class="tw-rounded-md"
+          class="tw-rounded-md tw-transition-all hover:tw-shadow-[#00dc82ff] hover:tw-shadow-md hover:tw-bg-[#00dc82ff] tw-text-white after:tw-border-[#ffffff]"
         >
           <Icon :component="item.icon"></Icon>
 
           <span>{{ item.name }}</span>
         </a-menu-item>
-        <a-sub-menu :key="item.name" v-else class="tw-rounded-md">
+        <a-sub-menu
+          :key="item.name"
+          v-else
+          class="tw-rounded-md hover:tw-shadow-[#00dc82ff] hover:tw-shadow-md hover:tw-bg-[#00dc82ff]"
+        >
           <template #title>
-            <span>
-              <Icon :component="item.icon"></Icon>
-              <span> {{ item.name }}</span>
-            </span>
+            <Icon class="tw-text-white" :component="item.icon"></Icon>
+            <span class="tw-text-white"> {{ item.name }}</span>
           </template>
           <a-menu-item
             v-for="(sub, j) in item.options"
             :key="`sub-${i}-${j}`"
             @click="$router.push(sub.to!)"
           >
-            <span>{{ sub.name }}</span>
+            <span class="tw-text-white">{{ sub.name }}</span>
           </a-menu-item>
         </a-sub-menu>
       </template>
     </a-menu>
   </a-layout-sider>
-
-  
 </template>
 <script lang="ts">
 import {
@@ -67,9 +60,9 @@ import {
   FileOutlined,
   StockOutlined,
   InfoCircleFilled,
-} from '@ant-design/icons-vue';
-import Icon from '@ant-design/icons-vue/lib/components/Icon';
-import { defineComponent, ref } from 'vue';
+} from "@ant-design/icons-vue";
+import Icon from "@ant-design/icons-vue/lib/components/Icon";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   components: {
     PieChartOutlined,
@@ -93,44 +86,42 @@ export default defineComponent({
     const selectedKeys = ref<string[]>([]);
     //# Menu list is for custom list on sidebar
     const menuList = [
-      { name: 'Stock', to: '/stock', icon: StockOutlined, isSub: false },
-      { name: 'Report', to: '/report', icon: PieChartOutlined, isSub: false },
+      { name: "Stock", to: "/stock", icon: StockOutlined, isSub: false },
+      { name: "Report", to: "/report", icon: PieChartOutlined, isSub: false },
       {
-        name: 'Navigation 3',
+        name: "Navigation 3",
         icon: TeamOutlined,
         options: [
-          { name: 'Option 1', to: '/nav3O1', icon: 'StockOutlined' },
-          { name: 'Option 2', to: '/nav3O2', icon: 'StockOutlined' },
+          { name: "Option 1", to: "/nav3O1", icon: "StockOutlined" },
+          { name: "Option 2", to: "/nav3O2", icon: "StockOutlined" },
         ],
         isSub: true,
       },
       {
-        name: 'Navigation 4',
+        name: "Navigation 4",
         icon: UserOutlined,
         options: [
-          { name: 'Option 1', to: '/nav4O1' },
-          { name: 'Option 2', to: '/nav4O2' },
-          { name: 'Option 2', to: '/nav4O3' },
+          { name: "Option 1", to: "/nav4O1" },
+          { name: "Option 2", to: "/nav4O2" },
+          { name: "Option 2", to: "/nav4O3" },
         ],
         isSub: true,
       },
       {
-        name: 'Navigation 5',
+        name: "Preferences",
         icon: FileOutlined,
         options: [
-          { name: 'Option 1', to: '/nav5O1' },
-          { name: 'Option 2', to: '/nav5O2' },
-          { name: 'Option 2', to: '/nav5O3' },
-          { name: 'Option 2', to: '/nav5O4' },
+          { name: "App", to: "/preferences/app" },
+          { name: "Theme", to: "/preferences/theme" },
         ],
         isSub: true,
       },
-      { name: 'About', to: '/', icon: InfoCircleFilled, isSub: false },
+      { name: "About", to: "/", icon: InfoCircleFilled, isSub: false },
     ];
 
     const onCollapse = (collapsed: boolean, type: string) => {
-      if (type == 'responsive') {
-        emit('update:collapsed', !props.collapsed);
+      if (type == "responsive") {
+        emit("update:collapsed", !props.collapsed);
       }
     };
 
@@ -148,3 +139,24 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #00dc82ff !important;
+  border-radius: 5px;
+}
+
+.ant-menu-sub.ant-menu-inline {
+  background-color: transparent !important;
+}
+
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
+  border-color: white;
+}
+
+.ant-menu-submenu-arrow {
+  color: white;
+}
+</style>
