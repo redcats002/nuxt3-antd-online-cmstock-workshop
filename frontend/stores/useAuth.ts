@@ -11,15 +11,12 @@ export const useAuth = () => {
   const api = useApi();
 
   const restoreSession = () => {
-    console.log("restoring session");
-
     if (!!token.value && !!username.value) {
       session.isLoggedIn = true;
       session.username = username.value!;
     } else {
       session.isLoggedIn = false;
     }
-    console.log(session);
   };
 
   const login = async (user: User) => {
