@@ -1,14 +1,14 @@
 <template>
-  <a-row :gutter="[0, 10]" class="tw-p-5">
+  <a-row :gutter="[0, 10]">
     <a-col :span="24" class="tw-my-1 tw-mt-2">
       <!-- STOCK-CARD -->
-      <a-row
-        :gutter="[0, 10]"
-        align="center"
-        justify="center"
-     
-      >
-        <a-col :span="6" v-for="(item, i) in stockCardList" :key="i" class="tw-pr-2">
+      <a-row :gutter="[0, 10]" align="center" justify="center">
+        <a-col
+          :span="6"
+          v-for="(item, i) in stockCardList"
+          :key="i"
+          class="tw-pr-2"
+        >
           <StockCard
             :title="item.title"
             :amount="item.amount"
@@ -88,9 +88,9 @@
   </a-row>
 </template>
 <script lang="ts" setup>
-import StockCard from '~/components/stock/Card.vue';
-import StockTable from '~/components/stock/Table.vue';
-import { useStockStore } from '~/stores/useStock';
+import StockCard from "~/components/stock/Card.vue";
+import StockTable from "~/components/stock/Table.vue";
+import { useStockStore } from "~/stores/useStock";
 import {
   SearchOutlined,
   ShoppingCartOutlined,
@@ -98,13 +98,13 @@ import {
   RollbackOutlined,
   PlusCircleFilled,
   DeleteOutlined,
-} from '@ant-design/icons-vue';
-import { Grid, message } from 'ant-design-vue';
-import { FetchingStatus } from '~/models/FetchingStatus';
-import { useAuth } from '~/stores/useAuth';
+} from "@ant-design/icons-vue";
+import { Grid, message } from "ant-design-vue";
+import { FetchingStatus } from "~/models/FetchingStatus";
+import { useAuth } from "~/stores/useAuth";
 const { useBreakpoint } = Grid;
 definePageMeta({
-  layout: 'default',
+  layout: "default",
 });
 const breakpointState = useBreakpoint();
 const stockStore = useStockStore();
@@ -114,18 +114,18 @@ const deleteProductId = ref();
 const api = useApi();
 const stockCardList = ref([
   {
-    title: 'Total',
-    amount: '1800',
+    title: "Total",
+    amount: "1800",
     icon: ShoppingCartOutlined,
-    color: '#16DB65',
+    color: "#16DB65",
   },
-  { title: 'Sold out', amount: '20', icon: SearchOutlined, color: '#058C42' },
-  { title: 'Return', amount: '4', icon: RollbackOutlined, color: '#04471C' },
+  { title: "Sold out", amount: "20", icon: SearchOutlined, color: "#058C42" },
+  { title: "Return", amount: "4", icon: RollbackOutlined, color: "#04471C" },
   {
-    title: 'Discount',
-    amount: '2',
+    title: "Discount",
+    amount: "2",
     icon: GiftOutlined,
-    color: '#0D2818',
+    color: "#0D2818",
   },
 ]);
 
@@ -139,7 +139,7 @@ const handleConfirmDelete = async () => {
   stockStore.setLoading(FetchingStatus.fetching);
   await api.deleteProduct(deleteProductId.value);
   await stockStore.loadProducts();
-  message.success('Delete successfully');
+  message.success("Delete successfully");
   visible.value = false;
   stockStore.setLoading(FetchingStatus.success);
   deleteProductId.value = null;

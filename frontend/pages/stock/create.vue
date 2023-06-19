@@ -1,5 +1,5 @@
 <template>
-  <a-row class="tw-my-4">
+  <a-row class="tw-mb-4">
     <a-col :span="24">
       <a-card
         class="tw-drop-shadow-md hover:tw-drop-shadow-lg tw-transition-all tw-rounded-lg"
@@ -76,20 +76,34 @@
                     class="tw-font-medium tw-w-full"
                   >
                     <a-upload
+                      v-model="modelRef.image"
+                      :max-count="1"
                       name="image"
                       list-type="picture-card"
                       class="avatar-uploader"
-                      :show-upload-list="false"
+                      :show-upload-list="true"
                       :before-upload="stockStore.beforeUpload"
                       @change="handleUploadChange"
+                      @preview="stockStore.handlePreview"
                     >
-                      <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-                      <div v-else>
+                      <div slot="trigger">
                         <loading-outlined v-if="loading"></loading-outlined>
                         <plus-outlined v-else></plus-outlined>
                         <div class="ant-upload-text">Upload</div>
                       </div>
                     </a-upload>
+                    <a-modal
+                      :visible="stockStore.preview.visible"
+                      :title="stockStore.preview.title"
+                      :footer="null"
+                      @cancel="stockStore.handleCancel"
+                    >
+                      <img
+                        alt="example"
+                        style="width: 100%"
+                        :src="previewImageUrl!"
+                      />
+                    </a-modal>
                   </a-form-item>
                 </a-col>
 
@@ -120,10 +134,10 @@
   </a-row>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRaw } from 'vue';
-import { Form, UploadChangeParam, UploadProps, message } from 'ant-design-vue';
-import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
-import { useStockStore } from '~/stores/useStock';
+import { defineComponent, reactive, toRaw } from "vue";
+import { Form, UploadChangeParam, UploadProps, message } from "ant-design-vue";
+import { PlusOutlined, LoadingOutlined } from "@ant-design/icons-vue";
+import { useStockStore } from "~/stores/useStock";
 // import api from '~/services/api';
 
 export default defineComponent({
@@ -133,48 +147,48 @@ export default defineComponent({
   },
   setup() {
     definePageMeta({
-      layout: 'default',
+      layout: "default",
     });
     const useForm = Form.useForm;
     const api = useApi();
     const stockStore = useStockStore();
     const loading = ref<boolean>(false);
-    const imageUrl = ref<string>('');
+    const previewImageUrl = ref<string | null>("");
     const modelRef = reactive({
-      name: '',
-      price: '',
-      stock: '',
+      name: "",
+      price: "",
+      stock: "",
       image: null as any,
     });
     const rulesRef = reactive({
       name: [
         {
           required: true,
-          message: 'Please input name',
+          message: "Please input name",
         },
         {
           min: 3,
           max: 5,
-          message: 'Length should be 3 to 5',
-          trigger: 'blur',
+          message: "Length should be 3 to 5",
+          trigger: "blur",
         },
       ],
       price: [
         {
           required: true,
-          message: 'Please input price',
+          message: "Please input price",
         },
       ],
       stock: [
         {
           required: true,
-          message: 'Please input amount of stock',
+          message: "Please input amount of stock",
         },
       ],
       image: [
         {
           required: true,
-          message: 'Please select image',
+          message: "Please select image",
         },
       ],
     });
@@ -182,28 +196,40 @@ export default defineComponent({
       modelRef,
       rulesRef
     );
+    const formats = useFormats();
     const router = useRouter();
     const onSubmit = async () => {
       await validate()
         .then(async () => {
           const formData = new FormData();
           const { name, price, stock } = modelRef;
-          formData.append('name', name);
-          formData.append('stock', stock.toString());
-          formData.append('price', price.toString());
+          formData.append("name", name);
+          formData.append("stock", stock.toString());
+          formData.append("price", price.toString());
           if (modelRef.image) {
-            formData.append('image', modelRef.image);
+            formData.append("image", modelRef.image);
           }
           await api.addProduct(formData);
           router.back();
         })
         .catch((err) => {
-          console.log('error', err);
+          console.log("error", err);
         });
     };
 
     const handleUploadChange = (info: UploadChangeParam) => {
-      imageUrl.value = stockStore.handleChange(info) as any;
+      // for preview
+      const res = stockStore.handleChange(info) as any;
+      const status = res?.status;
+      if (status == "removed") {
+        modelRef.image = null;
+        previewImageUrl.value = null;
+        return;
+      }
+      previewImageUrl.value = res;
+
+      // for upload
+      modelRef.image = formats.convertToFile(info);
     };
 
     return {
@@ -214,10 +240,10 @@ export default defineComponent({
       resetFields,
       modelRef,
       onSubmit,
-      imageUrl,
       loading,
       handleUploadChange,
       stockStore,
+      previewImageUrl,
     };
   },
 });
