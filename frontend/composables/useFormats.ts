@@ -1,6 +1,11 @@
 import { UploadChangeParam } from "ant-design-vue";
 
 export const useFormats = () => {
+  const toQuantity = (value: any) => {
+    const num = parseFloat(value);
+    return num.toFixed(2);
+  };
+
   const toCurrency = (value: any) => {
     return new Intl.NumberFormat("th-TH", {
       style: "currency",
@@ -20,5 +25,6 @@ export const useFormats = () => {
   return {
     toCurrency,
     convertToFile,
+    toQuantity,
   };
 };
