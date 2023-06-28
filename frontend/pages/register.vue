@@ -46,7 +46,7 @@
         <a-button
           size="large"
           shape="round"
-          class="tw-w-full tw-mb-5 tw-bg-[#00dc82] tw-text-white"
+          class="tw-w-full tw-mb-5 tw-bg-[#00B98D] tw-text-white"
           type="primary"
           html-type="submit"
           @click.prevent="onSubmit"

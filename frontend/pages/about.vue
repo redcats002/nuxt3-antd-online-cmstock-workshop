@@ -1,11 +1,15 @@
 <template>
-  <a-card>
-    <span class="tw-text-gray-800 tw-font-bold tw-pr-2">{{
-      value.pageView
-    }}</span>
-    <span class="tw-pr-2">Page views since</span>
-    <span class="tw-text-gray-400">{{ time }}</span>
-  </a-card>
+  <a-row>
+    <a-col :span="24">
+      <a-card>
+        <span class="tw-text-gray-800 tw-font-bold tw-pr-2">{{
+          value.pageView
+        }}</span>
+        <span class="tw-pr-2">Page views since</span>
+        <span class="tw-text-gray-400">{{ time }}</span>
+      </a-card>
+    </a-col>
+  </a-row>
 </template>
 <script lang="ts" setup>
 definePageMeta({

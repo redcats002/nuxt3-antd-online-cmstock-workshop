@@ -1,10 +1,10 @@
 <template>
-  <a-card hoverable type="inner" class="tw-rounded-lg">
+  <a-card hoverable type="inner" class="tw-rounded-lg tw-w-[500px]">
     <template #cover>
       <img
         alt="example"
-        src="~/assets/images/nuxt3.png"
-        class="tw-h-[200px] tw-object-cover tw-object-center tw-rounded-lg"
+        src="~/assets/images/banner_display.jpg"
+        class="tw-object-cover tw-object-center tw-rounded-lg"
       />
     </template>
     <a-card-meta class="tw-mb-4">
@@ -45,7 +45,7 @@
         <a-button
           size="large"
           shape="round"
-          class="tw-w-full tw-mb-2 tw-bg-[#00dc82] tw-text-white tw-ring-[#00dc82]"
+          class="tw-w-full tw-mb-2 tw-bg-[#00B98D] tw-text-white tw-ring-[#00B98D]"
           html-type="submit"
           @click.prevent="onSubmit"
           :loading="authStore.isLoading()"
@@ -64,7 +64,7 @@
           size="large"
           shape="round"
           type="link"
-          class="tw-w-full tw-mb-2 tw-text-[#00dc82]"
+          class="tw-w-full tw-mb-2 tw-text-[#00B98D]"
           @click="$router.push('/register')"
           >haven't account yet? please register</a-button
         >

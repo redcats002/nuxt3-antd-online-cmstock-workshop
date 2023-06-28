@@ -7,15 +7,20 @@
         <a-tag :color="props.color" class="tw-rounded-md tw-p-4">
           <props.icon class="tw-text-xl" />
         </a-tag>
-        <span class="tw-font-medium tw-text-lg"> {{ props.title }}</span>
+        <span class="tw-font-medium tw-text-lg tw-text-gray-600">
+          {{ props.title }}</span
+        >
       </div>
       <div>
-        <span class="tw-font-bold tw-text-lg">{{ props.amount }}</span>
+        <span class="tw-font-bold tw-text-lg">{{
+          formats.toCurrency(props.amount)
+        }}</span>
       </div>
     </a-row>
   </a-card>
 </template>
 <script setup lang="ts">
+const formats = useFormats();
 const props = defineProps<{
   title: string;
   amount: string;

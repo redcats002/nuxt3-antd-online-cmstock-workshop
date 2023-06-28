@@ -6,11 +6,11 @@
     breakpoint="xl"
     @collapse="onCollapse"
   >
-    <a-row class="tw-p-4 tw-w-full">
+    <a-row class="tw-w-full">
       <img
         alt="example"
-        src="~/assets/images/nuxt3.png"
-        class="tw-object-contain tw-object-center tw-rounded-lg tw-transition-all"
+        src="~/assets/images/logo_display.jpg"
+        class="tw-object-contain tw-object-center tw-rounded-b-lg tw-transition-all"
       />
       <!-- <span class="tw-font-bold">Logo</span> -->
     </a-row>
@@ -24,7 +24,7 @@
           v-if="!item.isSub"
           :key="item.to"
           @click="$router.push(item.to!)"
-          class="tw-rounded-md tw-transition-all hover:tw-shadow-[#00dc82ff] hover:tw-shadow-md hover:tw-bg-[#00dc82ff] tw-text-white after:tw-border-[#ffffff]"
+          class="tw-rounded-md tw-transition-all hover:tw-shadow-[#00B98Dff] hover:tw-shadow-md hover:tw-bg-[#00B98Dff] tw-text-white after:tw-border-[#ffffff]"
         >
           <Icon :component="item.icon"></Icon>
 
@@ -33,7 +33,7 @@
         <a-sub-menu
           :key="item.name"
           v-else
-          class="tw-rounded-md hover:tw-shadow-[#00dc82ff] hover:tw-shadow-md hover:tw-bg-[#00dc82ff]"
+          class="tw-rounded-md hover:tw-shadow-[#00B98Dff] hover:tw-shadow-md hover:tw-bg-[#00B98Dff]"
         >
           <template #title>
             <Icon class="tw-text-white" :component="item.icon"></Icon>
@@ -141,7 +141,7 @@ export default defineComponent({
 </script>
 <style>
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: #00dc82ff !important;
+  background-color: #00b98dff !important;
   border-radius: 5px;
 }
 

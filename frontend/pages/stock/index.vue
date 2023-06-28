@@ -1,7 +1,6 @@
 <template>
   <a-row :gutter="[0, 10]">
     <a-col :span="24" class="tw-my-1 tw-mt-2">
-      <!-- STOCK-CARD -->
       <a-row :gutter="[0, 10]" align="center" justify="center">
         <a-col
           :span="6"
@@ -21,7 +20,6 @@
     <a-col :span="24" class="tw-my-1">
       <a-card class="tw-w-full tw-min-h-[75vh] tw-rounded-lg tw-drop-shadow-md">
         <a-row align="center" justify="center" :gutter="[0, 10]">
-          <!-- Search bar -->
           <a-col :span="24">
             <a-row justify="space-between" :gutter="[0, 10]">
               <a-col :span="22">
@@ -42,19 +40,18 @@
               <a-col :span="2">
                 <a-button
                   @click="$router.push('/stock/create')"
-                  class="tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all tw-flex tw-items-center"
+                  class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all tw-flex tw-items-center tw-justify-center"
                   :shape="!breakpointState.sm ? 'circle' : 'rounded'"
                   :size="'large'"
                   type="primary"
                 >
                   <span v-if="breakpointState.sm"> NEW </span>
-
                   <template #icon> <PlusCircleFilled /></template>
                 </a-button>
               </a-col>
             </a-row>
           </a-col>
-          <!-- TABLE -->
+
           <a-col :span="24">
             <StockTable
               :stocks="stockStore.stocks"
@@ -117,7 +114,7 @@ const stockCardList = ref([
     title: "Total",
     amount: "1800",
     icon: ShoppingCartOutlined,
-    color: "#16DB65",
+    color: "#00B98D",
   },
   { title: "Sold out", amount: "20", icon: SearchOutlined, color: "#058C42" },
   { title: "Return", amount: "4", icon: RollbackOutlined, color: "#04471C" },
@@ -129,11 +126,8 @@ const stockCardList = ref([
   },
 ]);
 
-onMounted(async () => {
-  stockStore.setLoading(FetchingStatus.fetching);
-  await stockStore.loadProducts();
-  stockStore.setLoading(FetchingStatus.success);
-});
+// No need to use onMounted() for SSR
+await stockStore.loadProducts();
 
 const handleConfirmDelete = async () => {
   stockStore.setLoading(FetchingStatus.fetching);
