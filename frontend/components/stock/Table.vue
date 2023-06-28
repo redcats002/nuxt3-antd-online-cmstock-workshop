@@ -19,21 +19,27 @@
           {{ record.name }}
         </a>
       </template>
-      <template v-if="column.key === 'image'">
+      <template v-else-if="column.key === 'image'">
         <a-image
           :src="getFullImagePath(record.image)"
           height="35px"
           class="tw-object-contain"
         />
       </template>
+      <template v-else-if="column.key === 'stock'">
+        <span>{{ formats.toQuantity(record.stock) }}</span>
+      </template>
+      <template v-else-if="column.key === 'price'">
+        <span> {{ formats.toCurrency(record.price) }}</span>
+      </template>
       <template v-else-if="column.key == 'createdAt'">
         <span class="tw-opacity-80">
-          {{ dayjs(record.createdAt).format('DD/MM/YY • hh:mm') }}
+          {{ dayjs(record.createdAt).format("DD/MM/YY • hh:mm") }}
         </span>
       </template>
       <template v-else-if="column.key == 'updatedAt'">
         <span class="tw-opacity-80">
-          {{ dayjs(record.updatedAt).format('DD/MM/YY • hh:mm') }}
+          {{ dayjs(record.updatedAt).format("DD/MM/YY • hh:mm") }}
         </span>
       </template>
       <template v-else-if="column.key === 'action'">
@@ -62,53 +68,53 @@ import {
   DownOutlined,
   EditOutlined,
   DeleteOutlined,
-} from '@ant-design/icons-vue';
+} from "@ant-design/icons-vue";
 
-import { defineComponent } from 'vue';
-import { useStockStore } from '~/stores/useStock';
+import { defineComponent } from "vue";
+import { useStockStore } from "~/stores/useStock";
 const columns = [
   {
-    title: 'Image',
-    dataIndex: 'image',
-    key: 'image',
+    title: "Image",
+    dataIndex: "image",
+    key: "image",
   },
   {
-    name: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: '30%',
+    name: "Name",
+    dataIndex: "name",
+    key: "name",
+    width: "30%",
   },
 
   {
-    title: 'Stock',
-    dataIndex: 'stock',
-    key: 'stock',
+    title: "Stock",
+    dataIndex: "stock",
+    key: "stock",
   },
   {
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
+    title: "Price",
+    dataIndex: "price",
+    key: "price",
   },
   {
-    title: 'Created At',
-    key: 'createdAt',
-    dataIndex: 'createdAt',
+    title: "Created At",
+    key: "createdAt",
+    dataIndex: "createdAt",
   },
   {
-    title: 'Updated At',
-    key: 'updatedAt',
-    dataIndex: 'updatedAt',
+    title: "Updated At",
+    key: "updatedAt",
+    dataIndex: "updatedAt",
   },
   {
-    title: 'Action',
-    key: 'action',
+    title: "Action",
+    key: "action",
   },
 ];
 const data = [
   {
     id: 1,
-    image: 'John Brown',
-    name: 'John Brown',
+    image: "John Brown",
+    name: "John Brown",
     stock: 32,
     price: 500,
     createdAt: Date.now(),
@@ -127,13 +133,14 @@ export default defineComponent({
     stocks: Array,
   },
   setup(props, { emit }) {
+    const formats = useFormats();
     const dayjs = useDayjs();
     const stockStore = useStockStore();
     const handleClickEdit = (id: number) => {
-      emit('handleClickEdit', id);
+      emit("handleClickEdit", id);
     };
     const handleClickDelete = (id: number) => {
-      emit('handleClickDelete', id);
+      emit("handleClickDelete", id);
     };
     return {
       data,
@@ -143,6 +150,7 @@ export default defineComponent({
       handleClickEdit,
       props,
       stockStore,
+      formats,
     };
   },
 });
