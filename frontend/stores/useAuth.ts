@@ -67,8 +67,9 @@ export const useAuth = () => {
     token.value = null;
     session.isLoggedIn = false;
     session.username = undefined;
+    console.log(`${username.value}====${token.value}`);
     message.success("Logout successful");
-    return await navigateTo("/login", { redirectCode: 301 });
+    return await navigateTo("/login");
   };
 
   const isLoading = () => fetchingStatus.value == FetchingStatus.fetching;
