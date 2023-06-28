@@ -1,3 +1,0 @@
-# README SETUP
-
-alias create
