@@ -19,10 +19,10 @@
               >
                 <a-col :span="24" class="tw-flex tw-justify-center">
                   <a-tag
-                    color="success"
+                    color="warning"
                     class="tw-font-medium tw-text-xl tw-rounded-lg tw-px-4 tw-mb-4"
                   >
-                    NEW PRODUCT
+                    EDIT PRODUCT
                   </a-tag>
                 </a-col>
                 <a-col :span="24" class="tw-flex tw-justify-center tw-w-full">

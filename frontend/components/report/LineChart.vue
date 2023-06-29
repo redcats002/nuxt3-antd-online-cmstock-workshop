@@ -1,14 +1,15 @@
 <template>
-  <a-row>
-    <a-col :span="24">
-      <a-card class="tw-rounded-md tw-drop-shadow-sm" type="inner">
-        <template #title>
-          <span class="tw-font-bold tw-text-[1.5rem]"> Overview </span>
-        </template>
-        <LineChart ref="lineRef" :chartData="testData" :options="options" />
-      </a-card>
-    </a-col>
-  </a-row>
+  <a-card class="tw-rounded-md tw-drop-shadow-sm" type="inner">
+    <template #title>
+      <span class="tw-font-bold tw-text-[1.5rem]"> Overview </span>
+    </template>
+    <LineChart
+      ref="lineRef"
+      :chartData="testData"
+      :options="options"
+      class="tw-h-[270px]"
+    />
+  </a-card>
 </template>
 
 <script lang="ts" setup>
@@ -21,6 +22,7 @@ const props = defineProps({
 const lineRef = ref();
 const options = ref({
   responsive: true,
+
   plugins: {
     legend: {
       position: "top",

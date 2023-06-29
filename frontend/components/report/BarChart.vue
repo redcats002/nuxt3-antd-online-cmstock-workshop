@@ -1,21 +1,17 @@
 <template>
-  <a-row>
-    <a-col>
-      <a-card class="tw-rounded-md tw-drop-shadow-sm" type="inner">
-        <template #title>
-          <span class="tw-font-bold tw-text-[0.8rem]"> Profit this day </span>
-          <span class="tw-font-bold tw-text-[1.5rem] tw-block">
-            {{ formats.toCurrency(1999) }}
-          </span>
-        </template>
-        <BarChart
-          v-bind="barChartProps"
-          :options="options"
-          class="tw-h-full md:tw-max-h-[200px]"
-        />
-      </a-card>
-    </a-col>
-  </a-row>
+  <a-card class="tw-rounded-md tw-drop-shadow-sm" type="inner">
+    <template #title>
+      <span class="tw-font-bold tw-text-[0.8rem]"> Profit this day </span>
+      <span class="tw-font-bold tw-text-[1.5rem] tw-block">
+        {{ formats.toCurrency(1999) }}
+      </span>
+    </template>
+    <BarChart
+      v-bind="barChartProps"
+      :options="options"
+      class="tw-h-full md:tw-max-h-[270px]"
+    />
+  </a-card>
 </template>
 
 <script lang="ts" setup>

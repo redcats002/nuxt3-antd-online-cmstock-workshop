@@ -2,7 +2,7 @@
   <a-row :gutter="[0, 10]">
     <a-col :span="24">
       <a-card
-        class="tw-w-full tw-drop-shadow-md hover:tw-drop-shadow-md tw-transition-all tw-rounded-lg"
+        class="tw-w-full tw-relative tw-drop-shadow-md hover:tw-drop-shadow-md tw-transition-all tw-rounded-lg"
       >
         <ReportLineChart :data="lineData"></ReportLineChart>
       </a-card>
