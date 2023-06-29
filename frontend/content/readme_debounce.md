@@ -1,4 +1,5 @@
 # README DEBOUNCE
 
-setup 
-yarn add @types/lodash lodash
+## 1. install lodash
+
+`yarn add @types/lodash lodash`

@@ -1,14 +1,17 @@
-# README HTTPCLIENT 
-axios vs $fetch
+# README HTTPCLIENT
 
-## $fetch is the preferred way to make HTTP calls in Nuxt instead of @nuxt/http and @nuxtjs/axios that are made for Nuxt 2.
+## axios vs $fetch
+
+$fetch is the preferred way to make HTTP calls in Nuxt instead of @nuxt/http and @nuxtjs/axios that are made for Nuxt 2.
+
 1. seamless and integrated solution for making API calls.
-2. $fetch provides a consistent API across the server and client-side. 
+2. $fetch provides a consistent API across the server and client-side.
 3. Automatic Fetch Polyfill It eliminates the need for manually configuring polyfills for older browsers.
 4. It automatically prefetches and resolves data during the SSR process, resulting in improved performance and reduced latency.
 5. Composition API Support You can easily define reactive data and perform side effects within your components using the Composition API.
 
 ## $fetch API is using ofetch, with key features including:
+
 Automatic parsing of JSON responses (with access to raw response if needed)
 Request body and params are automatically handled, with correct Content-Type headers
 
@@ -23,4 +26,4 @@ Here's a summary of the main differences between useFetch and $fetch:
 Both $fetch and useFetch can be used to fetch data from external APIs, but they have different usage patterns and serve different purposes. You can choose the one that best fits your needs and the development style of your Nuxt.js 3 project.
 
 reference:
-https://nuxt.com/docs/api/utils/dollarfetch
+<https://nuxt.com/docs/api/utils/dollarfetch>

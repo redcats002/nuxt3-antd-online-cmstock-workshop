@@ -8,10 +8,10 @@ to store token in both side
 
 ## useCookie, an SSR-friendly composable to read and write cookies.
 
-const cookie = useCookie(name, options)
+`const cookie = useCookie(name, options)`
 
 👉useCookie only works during setup or Lifecycle Hooks.
 😌useCookie ref will automatically serialize and deserialize cookie value to JSON.
 
 references:
-https://nuxt.com/docs/api/composables/use-cookie
+<https://nuxt.com/docs/api/composables/use-cookie>

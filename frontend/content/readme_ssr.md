@@ -2,7 +2,7 @@
 
 - best practice to kept apiKey, data to be more secure
 
-- **ensure that the API calls are executed on the server during the rendering process.
+- \*\*ensure that the API calls are executed on the server during the rendering process.
 
 - This allows your application to pre-fetch data and include it in the initial server-rendered HTML, improving performance and SEO.
 
