@@ -15,7 +15,7 @@ $fetch is the preferred way to make HTTP calls in Nuxt instead of @nuxt/http and
 Automatic parsing of JSON responses (with access to raw response if needed)
 Request body and params are automatically handled, with correct Content-Type headers
 
-Here's a summary of the main differences between useFetch and $fetch:
+Here's a summary of the main differences between `useFetch and $fetch`:
 
 - $fetch is a global method, while useFetch is a composable function from the Composition API.
 - $fetch is used directly within components, layouts, or pages, while useFetch is used within a composition function.

@@ -28,4 +28,3 @@ For **TypeScript Vue Plugin (Volar)** may make some $ global ref is error recomm
 - [AntDesign](/frontend/content/readme_antd.md)
 - [TailwindCss](/frontend/content/readme_tailwind.md)
 - [Pinia](/frontend/content/readme_piniaStores.md)
-- [Dayjs](/frontend/content/readme_dayjs.md)
