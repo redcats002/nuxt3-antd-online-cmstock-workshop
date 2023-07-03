@@ -28,3 +28,9 @@ For **TypeScript Vue Plugin (Volar)** may make some $ global ref is error recomm
 - [AntDesign](/frontend/readme/readme_antd.md)
 - [TailwindCss](/frontend/readme/readme_tailwind.md)
 - [Pinia](/frontend/readme/readme_piniaStores.md)
+
+## Shortcut for install
+
+```ts
+yarn add @ant-design/icons-vue ant-design-vue @nuxtjs/tailwindcss pinia @pinia/nuxt @types/lodash lodash dayjs-nuxt chart.js vue-chart-3 url-join
+```
