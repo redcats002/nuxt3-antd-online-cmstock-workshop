@@ -25,6 +25,6 @@ For **TypeScript Vue Plugin (Volar)** may make some $ global ref is error recomm
 
 ## Packages
 
-- [AntDesign](/frontend/content/readme_antd.md)
-- [TailwindCss](/frontend/content/readme_tailwind.md)
-- [Pinia](/frontend/content/readme_piniaStores.md)
+- [AntDesign](/frontend/readme/readme_antd.md)
+- [TailwindCss](/frontend/readme/readme_tailwind.md)
+- [Pinia](/frontend/readme/readme_piniaStores.md)
