@@ -21,3 +21,8 @@
 It's important to note that calling APIs directly from the client-side using methods like fetch or Axios is still a valid approach, especially for scenarios where the data is not needed during the SSR process or when you're building a single-page application (SPA) without server-side rendering requirements.
 
 Ultimately, the decision to use the server/api directory or make direct API calls from the client depends on your specific use case, application requirements, and architectural considerations
+
+ref: <https://stackoverflow.com/questions/74672537/how-does-nuxt3-know-which-code-to-execute-on-the-server-side-vs-client-side>
+
+This link provided which lifecycle hooks is running on server || client || both
+ref: <https://nuxt.com/docs/api/advanced/hooks>

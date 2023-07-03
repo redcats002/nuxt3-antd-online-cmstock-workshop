@@ -32,6 +32,8 @@ export default defineNuxtConfig({
 
 - define each store in /stores directory
 
+Example store state in server side using pinia & middleware.server <https://github.com/vuejs/pinia/discussions/947>
+
 Simple usage <https://nuxt.com/modules/pinia#create-a-store>
 
 ref: <https://nuxt.com/modules/pinia>
