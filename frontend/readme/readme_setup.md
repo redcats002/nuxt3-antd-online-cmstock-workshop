@@ -28,7 +28,7 @@ For **TypeScript Vue Plugin (Volar)** may make some $ global ref is error recomm
 ### dependencies
 
 ```ts
-yarn add @ant-design/icons-vue ant-design-vue @nuxtjs/tailwindcss pinia @pinia/nuxt h lodash dayjs-nuxt chart.js vue-chart-3 url-join
+yarn add @ant-design/icons-vue ant-design-vue @nuxtjs/tailwindcss pinia @pinia/nuxt h lodash dayjs-nuxt chart.js vue-chart-3 url-join @vueuse/nuxt
 ```
 
 ### devDependencies
