@@ -41,8 +41,8 @@
                 <a-button
                   @click="$router.push('/stock/create')"
                   class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all tw-flex tw-items-center tw-justify-center"
-                  :shape="!breakpointState.sm ? 'circle' : 'rounded'"
-                  :size="'large'"
+                  shape="rounded"
+                  size="large"
                   type="primary"
                 >
                   <span v-if="breakpointState.sm"> NEW </span>
@@ -98,7 +98,6 @@ import {
 } from "@ant-design/icons-vue";
 import { Grid, message } from "ant-design-vue";
 import { FetchingStatus } from "~/models/FetchingStatus";
-import { useAuth } from "~/stores/useAuth";
 const { useBreakpoint } = Grid;
 definePageMeta({
   layout: "default",

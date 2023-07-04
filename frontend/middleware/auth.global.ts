@@ -9,14 +9,16 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (to.meta.layout === "default") {
     // secure
     if (authStore.session.isLoggedIn) {
+      if (to.fullPath == "/") return await navigateTo("/stock");
       return;
     } else {
-      return await navigateTo("/login", { redirectCode: 301 });
+      // { redirectCode: 301 }
+      return await navigateTo("/login");
     }
   } else {
     // unsecure
     if (authStore.session.isLoggedIn) {
-      return await navigateTo("/stock", { redirectCode: 301 });
+      return await navigateTo("/stock");
     } else {
       return;
     }

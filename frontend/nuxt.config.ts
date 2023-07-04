@@ -3,11 +3,8 @@ import { resolve } from "path";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@pinia/nuxt", "dayjs-nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "dayjs-nuxt"],
   plugins: ["~/plugins/chartjs.client.ts", "~/plugins/antd.ts"],
-  alias: {
-    "@": resolve(__dirname, "/"),
-  },
   css: ["~/assets/main.css", "~/assets/tailwind.css"],
 
   tailwindcss: {
