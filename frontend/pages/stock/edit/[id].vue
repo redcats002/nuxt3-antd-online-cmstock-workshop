@@ -176,9 +176,9 @@ export default defineComponent({
           message: "Please input name",
         },
         {
-          min: 3,
-          max: 5,
-          message: "Length should be 3 to 5",
+          min: 6,
+          // max: 12,
+          message: "Length should be at least 6",
           trigger: "blur",
         },
       ],

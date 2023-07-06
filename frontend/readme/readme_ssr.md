@@ -22,6 +22,12 @@ It's important to note that calling APIs directly from the client-side using met
 
 Ultimately, the decision to use the server/api directory or make direct API calls from the client depends on your specific use case, application requirements, and architectural considerations
 
+## To call api in ssr to store in pinia we use middleware.server
+
+middleware.server -(inject)-> pinia store -(state)-> client
+
+[pinia](/frontend/readme/readme_pinia.md)
+
 ref: <https://stackoverflow.com/questions/74672537/how-does-nuxt3-know-which-code-to-execute-on-the-server-side-vs-client-side>
 
 This link provided which lifecycle hooks is running on server || client || both

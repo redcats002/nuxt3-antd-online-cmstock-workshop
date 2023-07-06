@@ -28,9 +28,12 @@ definePageMeta({
   ],
 });
 </script>
-
 ```
 
-### in our app we use to check the secure route that user can router to
+### Usage
+
+1. in our app we use to check the secure route that user can router to
+
+2. Inject the data that call in ssr to pinia
 
 ref: <https://nuxt.com/docs/guide/directory-structure/middleware>
