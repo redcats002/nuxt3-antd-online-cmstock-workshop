@@ -6,6 +6,7 @@ const formidable = require("formidable");
 const path = require("path");
 const fs = require("fs-extra");
 const constants = require("./constant");
+const { firstValues } = require("formidable/src/helpers/firstValues.js");
 
 router.get("/product", async (req, res) => {
   const result = await product.findAll({ order: Sequelize.literal("id DESC") });
@@ -19,7 +20,7 @@ const uploadImage = async (files, doc) => {
     doc.image = `${doc.id}.${fileExtention}`;
     var newpath =
       path.resolve(__dirname + "/uploaded/images/") + "/" + doc.image;
-    console.log(newpath)
+    console.log(newpath);
 
     if (fs.exists(newpath)) {
       await fs.remove(newpath);
@@ -35,40 +36,48 @@ const uploadImage = async (files, doc) => {
   }
 };
 
-router.post("/product", (req, res) => {
+// ADD
+router.post("/product", async (req, res) => {
   try {
     const form = new formidable.IncomingForm();
-    form.parse(req, async (error, fields, files) => {
-      let result = await product.create(fields);
-      result = await uploadImage(files, result);
-      res.json({
-        result: constants.kResultOk,
-        message: JSON.stringify(result),
-      });
+
+    const [_fields, _files] = await form.parse(req);
+    const fields = firstValues(form, _fields);
+    const files = firstValues(form, _files);
+    let result = await product.create(fields);
+    result = await uploadImage(files, result);
+    res.json({
+      result: constants.kResultOk,
+      message: JSON.stringify(result),
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
+  }
+});
+
+// UPDATE
+router.put("/product", async (req, res) => {
+  try {
+    const form = new formidable.IncomingForm();
+
+    const [_fields, _files] = await form.parse(req);
+    const fields = firstValues(form, _fields);
+    const files = firstValues(form, _files);
+    let result = await product.update(fields, {
+      where: { id: fields.id },
+    });
+    result = await uploadImage(files, fields);
+    res.json({
+      result: constants.kResultOk,
+      message: JSON.stringify(result),
     });
   } catch (error) {
     res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
   }
 });
 
-router.put("/product", (req, res) => {
-  try {
-    const form = new formidable.IncomingForm();
-
-    form.parse(req, async (error, fields, files) => {
-
-      let result = await product.update(fields, { where: { id: fields.id } });
-      result = await uploadImage(files, fields);
-      res.json({
-        result: constants.kResultOk,
-        message: JSON.stringify(result),
-      });
-    });
-  } catch (error) {
-    res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
-  }
-});
-
+// DELETE
 router.delete("/product/id/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -82,6 +91,7 @@ router.delete("/product/id/:id", async (req, res) => {
   }
 });
 
+// GET BY ID
 router.get("/product/id/:id", async (req, res) => {
   try {
     let result = await product.findOne({ where: { id: req.params.id } });
@@ -95,14 +105,15 @@ router.get("/product/id/:id", async (req, res) => {
   }
 });
 
+// GET BY KEYWORD (ARRAY)
 router.get("/product/name/:keyword", async (req, res) => {
   console.log("get products by keyword");
   try {
-    let keyword = req.params.keyword
+    let keyword = req.params.keyword;
     const result = await product.findAll({
       where: Sequelize.where(
-        Sequelize.fn('LOWER', Sequelize.col('name')),
-        'LIKE',
+        Sequelize.fn("LOWER", Sequelize.col("name")),
+        "LIKE",
         `%${keyword.toLowerCase()}%`
       ),
     });
@@ -112,10 +123,9 @@ router.get("/product/name/:keyword", async (req, res) => {
       res.json([]);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.json([]);
   }
 });
-
 
 module.exports = router;
