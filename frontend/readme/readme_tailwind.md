@@ -6,7 +6,9 @@ Add Tailwind CSS to your Nuxt application in seconds with PurgeCSS included for 
 
 `yarn add @nuxtjs/tailwindcss`
 
-## 2. Add it to your modules section in your nuxt.config:
+## 2. Add it to your modules section in your `nuxt.config`:
+
+`nuxt.config.ts`
 
 ```ts
 export default defineNuxtConfig({
@@ -18,26 +20,39 @@ That's it! You can now use Tailwind classes in your Nuxt app ✨
 
 ## Tailwind Files
 
-When running nuxt dev, this module will look for these files:
+To complete running yarn dev, this module will look for these files:
 
-- ./assets/css/tailwind.css
-- ./tailwind.config.{js,cjs,mjs,ts}
+- `~/assets/css/tailwind.css`
+- `~/tailwind.config.{js,cjs,mjs,ts}`
 
-<!-- ~/assets/css/tailwind.css -->
+If they don't exist, the module will inject a basic configuration for each one so you don't have to create these files.
 
-```ts
+**But if you need those files to configuration**
+
+file `~/assets/css/tailwind.css`
+
+```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
 
-If they don't exist, the module will inject a basic configuration for each one so you don't have to create these files.
-
-**But if you need those file to config run**
+file `~/tailwind.config.{js,cjs,mjs,ts}`
 
 `npx tailwindcss init`
 
-## 3. (Optional) for default configuration in nuxt.config.js
+```ts
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+## 3. (Optional) for default configuration in `nuxt.config.ts`
 
 ```ts
 export default defineNuxtConfig({
@@ -53,7 +68,7 @@ export default defineNuxtConfig({
 });
 ```
 
-## 4. Recommend to config tailwind.config file for
+## 4. (Recommend) to config tailwind.config file for
 
 - prefix
 - important

@@ -107,7 +107,6 @@ router.get("/product/id/:id", async (req, res) => {
 
 // GET BY KEYWORD (ARRAY)
 router.get("/product/name/:keyword", async (req, res) => {
-  console.log("get products by keyword");
   try {
     let keyword = req.params.keyword;
     const result = await product.findAll({

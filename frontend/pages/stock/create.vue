@@ -82,7 +82,7 @@
                       list-type="picture-card"
                       class="avatar-uploader"
                       :show-upload-list="true"
-                      :before-upload="stockStore.beforeUpload"
+                      :before-upload="formats.beforeUpload"
                       @change="handleUploadChange"
                       @preview="stockStore.handlePreview"
                     >
@@ -138,6 +138,7 @@ import { defineComponent, reactive, toRaw } from "vue";
 import { Form, UploadChangeParam, UploadProps, message } from "ant-design-vue";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons-vue";
 import { useStockStore } from "~/stores/useStock";
+import { useFormats } from "~/composables/useFormats";
 // import api from '~/services/api';
 
 export default defineComponent({
@@ -150,6 +151,7 @@ export default defineComponent({
       layout: "default",
     });
     const useForm = Form.useForm;
+    const formats = useFormats();
     const api = useApi();
     const stockStore = useStockStore();
     const loading = ref<boolean>(false);
@@ -196,7 +198,7 @@ export default defineComponent({
       modelRef,
       rulesRef
     );
-    const formats = useFormats();
+
     const router = useRouter();
     const onSubmit = async () => {
       await validate()
@@ -244,6 +246,7 @@ export default defineComponent({
       handleUploadChange,
       stockStore,
       previewImageUrl,
+      formats,
     };
   },
 });

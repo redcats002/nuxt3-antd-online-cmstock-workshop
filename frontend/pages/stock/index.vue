@@ -98,9 +98,11 @@ import {
 } from "@ant-design/icons-vue";
 import { Grid, message } from "ant-design-vue";
 import { FetchingStatus } from "~/models/FetchingStatus";
+import stock from "~/middleware/stock";
 const { useBreakpoint } = Grid;
 definePageMeta({
   layout: "default",
+  middleware: stock,
 });
 const breakpointState = useBreakpoint();
 const stockStore = useStockStore();
@@ -125,8 +127,8 @@ const stockCardList = ref([
   },
 ]);
 
-// No need to use onMounted() for SSR
-await stockStore.loadProducts();
+// No need to use onMounted() for SSR w/ setup (Top-level-binding)
+// await stockStore.loadProducts();
 
 const handleConfirmDelete = async () => {
   stockStore.setLoading(FetchingStatus.fetching);

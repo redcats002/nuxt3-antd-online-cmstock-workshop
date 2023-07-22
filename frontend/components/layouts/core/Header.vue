@@ -5,8 +5,13 @@
       justify="space-between"
       class="tw-items-center tw-h-full tw-px-4"
     >
-      <a-tag color="#00B98D" ghoste class="tw-rounded-lg tw-px-4">
-        <span class="tw-font-bold tw-text-xl">CMDev</span>
+      <a-tag ghost class="tw-rounded-lg tw-p-2">
+        <span class="tw-font-bold tw-text-xl">
+          <a-row align="center" justify="space-between">
+            <AreaChartOutlined class="tw-text-lg tw-pr-2" />
+            CMDev - Stock Workshop
+          </a-row>
+        </span>
       </a-tag>
       <a-tag
         color="#EE2E31"
@@ -22,7 +27,7 @@
   </a-layout-header>
 </template>
 <script lang="ts">
-import { LogoutOutlined } from "@ant-design/icons-vue";
+import { LogoutOutlined, AreaChartOutlined } from "@ant-design/icons-vue";
 import { useAuth } from "~/stores/useAuth";
 
 export default defineComponent({
@@ -30,6 +35,6 @@ export default defineComponent({
     const authStore = useAuth();
     return { authStore };
   },
-  components: { LogoutOutlined },
+  components: { LogoutOutlined, AreaChartOutlined },
 });
 </script>

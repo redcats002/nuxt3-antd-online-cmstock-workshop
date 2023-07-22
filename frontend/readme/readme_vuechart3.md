@@ -18,6 +18,14 @@ export default defineNuxtPlugin((nuxtApp) => {
 });
 ```
 
+## 3. register plugin in nuxt.config.ts
+
+```ts
+export default defineNuxtConfig({
+  plugins: ["~/plugins/chartjs.client.ts"],
+});
+```
+
 ## Let's useeeee
 
 ref: <https://vue-chart-3.netlify.app/>

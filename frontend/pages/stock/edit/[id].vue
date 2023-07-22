@@ -80,7 +80,7 @@
                       list-type="picture-card"
                       class="avatar-uploader"
                       :show-upload-list="true"
-                      :before-upload="stockStore.beforeUpload"
+                      :before-upload="formats.beforeUpload"
                       @change="handleUploadChange"
                       @preview="stockStore.handlePreview"
                     >
@@ -257,6 +257,7 @@ export default defineComponent({
       stockStore,
       handleUploadChange,
       previewImageUrl,
+      formats,
     };
   },
 });

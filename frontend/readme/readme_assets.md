@@ -4,6 +4,6 @@ for .css / images, fonts, etc...
 
 ```ts
 export default defineNuxtConfig({
-  css: ["~/assets/main.css", "~/assets/tailwind.css"],
+  css: ["~/assets/css/main.css", "~/assets/css/tailwind.css"],
 });
 ```

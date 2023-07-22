@@ -10,9 +10,9 @@ Composables are a design pattern used to encapsulate related logic into reusable
 
 ## Basic implementation
 
-## 1. create /composables
+### 1. create /composables
 
-## 2. create useFoo.ts in /composables
+### 2. create useFoo.ts in /composables
 
 ```ts
 export const useFoo = () => {
@@ -32,5 +32,10 @@ const foo = useFoo()
 </script>
 ```
 
+## About use composables on SSR (serevr (nitro))
+
+Composables are only meant to be used in the Vue portion of your app, hence why they're not auto imported to nitro (the server) and why manually importing works, however though doing so is not advised.
+
 references:
-https://nuxt.com/docs/guide/directory-structure/composables
+<https://nuxt.com/docs/guide/directory-structure/composables>,
+<https://github.com/nuxt/nuxt/discussions/16164>

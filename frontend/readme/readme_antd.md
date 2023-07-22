@@ -1,18 +1,20 @@
-# Ant Design Vue UI Component Framework
+# Ant Design Vue UI Component Framework 🐜
 
 ## 1. Use ant-design-vue to be plugin
 
 ### 1.1 install ant-design-vue & @ant-design/icons-vue
 
-`yarn add ant-design-vue @ant-design/icons-vue`
+```bash
+  yarn add ant-design-vue @ant-design/icons-vue
+```
 
-### 1.2 create /plugins directory and naming it as antd.ts
+### 1.2 create `/plugins` directory and naming it as `antd.ts`
 
-<!-- /plugins/antd.ts -->
+`/plugins/antd.ts`
 
 ```ts
 import { defineNuxtPlugin } from "#app";
-import "ant-design-vue/dist/antd.css";
+import "ant-design-vue/dist/reset.css"; // import css stylesheets https://www.antdv.com/docs/vue/introduce/#usage
 import Antd from "ant-design-vue";
 
 export default defineNuxtPlugin((nuxtApp) => {

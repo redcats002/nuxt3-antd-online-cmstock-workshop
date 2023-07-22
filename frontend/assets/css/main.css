@@ -1,9 +1,13 @@
 /* FOR FIX a-image is not centered */
 img.ant-image-preview-img {
-    display: inline-block !important;
+  display: inline-block !important;
 }
 
 /* a-input rounded globally */
 .ant-input-affix-wrapper {
   border-radius: 20px !important;
+}
+
+.ant-menu-submenu-arrow {
+  color: white !important;
 }

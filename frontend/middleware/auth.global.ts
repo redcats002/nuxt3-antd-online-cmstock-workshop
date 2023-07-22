@@ -1,7 +1,7 @@
 import { useAuth } from "~/stores/useAuth";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  console.log("client-middleware-global");
+  console.log("nuxtapp-middleware-global");
   const authStore = useAuth();
 
   // CHECK AUTH BUY LAYOUT

@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "dayjs-nuxt", "@vueuse/nuxt"],
   plugins: ["~/plugins/chartjs.client.ts", "~/plugins/antd.ts"],
-  css: ["~/assets/main.css", "~/assets/tailwind.css"],
+  css: ["~/assets/css/main.css", "~/assets/css/tailwind.css"],
 
   tailwindcss: {
     cssPath: "~/assets/css/tailwind.css",

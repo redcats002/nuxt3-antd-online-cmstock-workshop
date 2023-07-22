@@ -3,8 +3,8 @@
     <template #cover>
       <img
         alt="example"
-        src="~/assets/images/nuxt3.png"
-        class="tw-h-[200px] tw-object-cover tw-object-center tw-rounded-lg"
+        src="~/assets/images/banner_display.jpg"
+        class="tw-object-cover tw-object-center tw-rounded-lg"
       />
     </template>
     <a-card-meta class="tw-mb-4">

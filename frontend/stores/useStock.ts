@@ -1,12 +1,12 @@
 import { UploadChangeParam, UploadProps, message } from "ant-design-vue";
-import { debounce } from "lodash";
+import lodash from "lodash";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 import { FetchingStatus } from "~/models/FetchingStatus";
 import { Product } from "~/models/product.model";
 
 export const useStockStore = defineStore("stock", () => {
-  const api = useApi();
+  // state
   const stocks = ref<Product[]>([]);
   const fetchingStatus = ref<FetchingStatus>(FetchingStatus.init);
   const autoCompleteOptions = ref([]);
@@ -14,12 +14,17 @@ export const useStockStore = defineStore("stock", () => {
     visible: false,
     title: "",
   });
+  const api = useApi();
+
+  // getter
   const setLoading = (status: FetchingStatus) => {
     fetchingStatus.value = status;
   };
   const isLoading = () => {
     return fetchingStatus.value === FetchingStatus.fetching;
   };
+
+  // actions
   const loadProducts = async () => {
     setLoading(FetchingStatus.fetching);
     try {
@@ -48,7 +53,7 @@ export const useStockStore = defineStore("stock", () => {
     }
   };
 
-  const debouncedSearch = debounce(async (value: string) => {
+  const debouncedSearch = lodash.debounce(async (value: string) => {
     setLoading(FetchingStatus.fetching);
     try {
       if (value) {
@@ -66,18 +71,6 @@ export const useStockStore = defineStore("stock", () => {
       }, 500);
     }
   }, 500); // Adjust the debounce delay as needed
-
-  const beforeUpload = (file: any) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-  };
 
   const handleChange = (info: UploadChangeParam) => {
     if (info.file.status === "uploading") {
@@ -136,7 +129,7 @@ export const useStockStore = defineStore("stock", () => {
     onSelect,
     stocks,
     autoCompleteOptions,
-    beforeUpload,
+
     handleChange,
     handlePreview,
     handleCancel,

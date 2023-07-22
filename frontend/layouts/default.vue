@@ -1,6 +1,8 @@
 <template>
   <a-layout class="tw-min-h-screen" hasSider>
-    <LayoutsCoreSidebar v-model:collapsed="collapsed"></LayoutsCoreSidebar>
+    <ClientOnly>
+      <LayoutsCoreSidebar v-model:collapsed="collapsed"></LayoutsCoreSidebar
+    ></ClientOnly>
     <a-layout class="tw-w-full tw-overflow-auto">
       <LayoutsCoreHeader></LayoutsCoreHeader>
       <!-- <LayoutsCoreContent></LayoutsCoreContent> -->

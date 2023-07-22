@@ -3,7 +3,7 @@ import { FetchingStatus } from "~/models/FetchingStatus";
 import { Session } from "~/models/session.model";
 import { User } from "~/models/user.model";
 
-export const useAuth = () => {
+export const useAuth = defineStore("auth", () => {
   const username = useCookie(server.TOKEN_KEY);
   const token = useCookie(server.TOKEN_KEY);
   const fetchingStatus = ref<FetchingStatus>(FetchingStatus.init);
@@ -83,4 +83,4 @@ export const useAuth = () => {
     fetchingStatus,
     isLoading,
   };
-};
+});
