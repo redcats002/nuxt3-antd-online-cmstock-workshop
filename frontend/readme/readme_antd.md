@@ -35,7 +35,7 @@ export default defineNuxtConfig({
 
 ---
 
-Acutally @ant-design-vue/nuxt is avaiable but it have conflict with vite.
+Acutally `@ant-design-vue/nuxt` is avaiable but it `have conflict with vite.`
 So, we manually setup the plugin instead.
 
 ## 2. Use @ant-design-vue/nuxt

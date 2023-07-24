@@ -23,14 +23,24 @@ ref: <https://nuxt.com/docs/guide/going-further/layers#basic-example>
 -Vue Volar extension Pack
 -Vue VSCode Snippets
 
-For **TypeScript Vue Plugin (Volar)** may make some $ global ref is error recommend to use only **TypeScript Vue Plugin (Volar)**
+Install
 
-## Packages (Install in order)
+```bash
+code --install-extension MisterJ.vue-volar-extention-pack
+code --install-extension sdras.vue-vscode-extensionpack
+code --install-extension bradlc.vscode-tailwindcss
+```
+
+For **TypeScript**
+recommend to use **TypeScript Vue Plugin (Volar)**
+But now Vetur also supports
+
+## Packages
 
 ### dependencies
 
 ```bash
-yarn add @ant-design/icons-vue ant-design-vue @nuxtjs/tailwindcss pinia @pinia/nuxt h lodash dayjs-nuxt chart.js vue-chart-3 url-join @vueuse/nuxt
+yarn add @ant-design/icons-vue ant-design-vue@^3.2.20 @nuxtjs/tailwindcss pinia @pinia/nuxt h lodash dayjs-nuxt chart.js vue-chart-3 url-join @vueuse/nuxt
 ```
 
 ### devDependencies
@@ -109,7 +119,16 @@ yarn nuxi typecheck
 5. [composables/](/frontend/readme/readme_composables.md)
 6. [store/](/frontend/readme/readme_pinia.md)
 7. [components/](/frontend/readme/readme_components.md)
-8. [middleware/](/frontend/readme/readme_middleware.md)
-9. [layouts/](/frontend/readme/readme_layouts.md)
-10. [pages/](/frontend/readme/readme_route.md)
-11. [server/](/frontend/readme/readme_server.md)
+8. [server/](/frontend/readme/readme_server.md)
+9. [middleware/](/frontend/readme/readme_middleware.md)
+10. [layouts/](/frontend/readme/readme_layouts.md)
+11. [pages/](/frontend/readme/readme_route.md)
+
+## .env
+
+Create `.env` at the same level as the `app.vue`
+
+```yaml
+VITE_VERSION=1.1 (PRO)
+VITE_BACKEND_BASE_URL=http://localhost:8081
+```

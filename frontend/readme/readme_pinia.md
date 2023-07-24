@@ -34,9 +34,9 @@ export default defineNuxtConfig({
 
 Now, pinia offer 2 ways to define store are:
 
-- option stores (Traditional way)
+- **option** stores (Traditional way)
   state, getters, actions
-- setup stores (Composite API like)
+- **setup** stores (Composite API like)
   ref()s become state properties
   computed()s become getters
   function()s become actions
@@ -44,8 +44,6 @@ Now, pinia offer 2 ways to define store are:
 for more information visit this [link](https://pinia.vuejs.org/core-concepts/#defining-a-store)
 
 ```ts
-import { defineStore } from "pinia";
-
 // main is the name of the store. It is unique across your application
 // and will appear in devtools
 export const useMainStore = defineStore("main", {
@@ -69,13 +67,16 @@ export const useMainStore = defineStore("main", {
       // `this` is the store instance
       this.counter = 0;
     },
+    increasement() {
+      this.counter++;
+    },
   },
 });
 ```
 
 ## Get Started
 
-- define each store in /stores directory
+- define each store in `/store` directory
 
 Example store state in server side using pinia & middleware.server <https://github.com/vuejs/pinia/discussions/947>
 

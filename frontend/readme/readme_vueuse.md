@@ -16,6 +16,6 @@ export default defineNuxtConfig({
 
 in this project we use
 
-`useTimeAgo()`
+`useTimeAgo(), useCookie()`
 
 ref: <https://nuxt.com/modules/vueuse>
