@@ -5,8 +5,10 @@
 ### 1.1 install ant-design-vue & @ant-design/icons-vue
 
 ```bash
-  yarn add ant-design-vue @ant-design/icons-vue
+  yarn add ant-design-vue@^3.2.20 @ant-design/icons-vue
 ```
+
+This workshop support to antd ^3.2.20 (now is 4.0.0)
 
 ### 1.2 create `/plugins` directory and naming it as `antd.ts`
 
@@ -14,7 +16,8 @@
 
 ```ts
 import { defineNuxtPlugin } from "#app";
-import "ant-design-vue/dist/reset.css"; // import css stylesheets https://www.antdv.com/docs/vue/introduce/#usage
+import "ant-design-vue/dist/antd.css"; // import css stylesheets https://www.antdv.com/docs/vue/introduce/#usage
+// for ant-design-vue: ^4.0.0 change antd.css -> reset.css
 import Antd from "ant-design-vue";
 
 export default defineNuxtPlugin((nuxtApp) => {

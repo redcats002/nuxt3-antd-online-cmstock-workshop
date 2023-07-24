@@ -48,6 +48,56 @@ yarn add -D @types/lodash
 - [DayJS](/frontend//readme/readme_dayjs.md)
 - [VueUse](/frontend//readme/readme_vueuse.md)
 
+nuxt.config.ts (Final)
+
+```ts
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  devtools: { enabled: true },
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "dayjs-nuxt", "@vueuse/nuxt"],
+  plugins: ["~/plugins/chartjs.client.ts", "~/plugins/antd.ts"],
+  css: ["~/assets/css/main.css", "~/assets/css/tailwind.css"],
+
+  tailwindcss: {
+    cssPath: "~/assets/css/tailwind.css",
+    configPath: "tailwind.config.js",
+    exposeConfig: false,
+    exposeLevel: 2,
+    injectPosition: "first",
+    viewer: true,
+  },
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      "defineStore", // import { defineStore } from 'pinia'
+      ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
+  imports: {
+    dirs: [
+      // Scan top-level modules
+      "composables",
+      // ... or scan modules nested one level deep with a specific name and file extension
+      "composables/*/index.{ts,js,mjs,mts}",
+      // ... or scan all modules within given directory
+      "composables/**",
+    ],
+  },
+});
+```
+
+## Typescript support
+
+### Type-checking
+
+By default, Nuxt doesn't check types when you run nuxi dev or nuxi build, for performance reasons. However, you can enable type-checking at build or development time by installing vue-tsc and typescript as devDependencies and either enabling the typescript.typeCheck option in your nuxt.config file or manually checking your types with nuxi.
+
+```bash
+yarn nuxi typecheck
+```
+
+[TS](/frontend/readme/readme_typescript.md)
+
 ## Then copy folder from prototype in order
 
 [directory](/frontend//readme/readme_directory.md)
@@ -57,7 +107,7 @@ yarn add -D @types/lodash
 3. models/
 4. plugins/
 5. [composables/](/frontend/readme/readme_composables.md)
-6. [stores/](/frontend/readme/readme_pinia.md)
+6. [store/](/frontend/readme/readme_pinia.md)
 7. [components/](/frontend/readme/readme_components.md)
 8. [middleware/](/frontend/readme/readme_middleware.md)
 9. [layouts/](/frontend/readme/readme_layouts.md)
