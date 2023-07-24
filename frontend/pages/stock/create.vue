@@ -137,7 +137,7 @@
 import { defineComponent, reactive, toRaw } from "vue";
 import { Form, UploadChangeParam, UploadProps, message } from "ant-design-vue";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons-vue";
-import { useStockStore } from "~/stores/useStock";
+import { useStockStore } from "~/store/stock";
 import { useFormats } from "~/composables/useFormats";
 // import api from '~/services/api';
 
@@ -251,3 +251,4 @@ export default defineComponent({
   },
 });
 </script>
+~/store/stock ~/store/stock

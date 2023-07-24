@@ -13,9 +13,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, ref } from "vue";
+import { computed, ref } from "vue";
 import { DoughnutChart } from "vue-chart-3";
-import { Chart, registerables } from "chart.js";
 
 const props = defineProps({
   data: Array,

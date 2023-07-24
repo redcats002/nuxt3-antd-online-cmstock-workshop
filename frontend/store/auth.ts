@@ -9,7 +9,7 @@ export const useAuth = defineStore("auth", () => {
   const fetchingStatus = ref<FetchingStatus>(FetchingStatus.init);
   const session = reactive<Session>({ isLoggedIn: false });
   const api = useApi();
-
+  const router = useRouter();
   const restoreSession = () => {
     if (!!token.value && !!username.value) {
       session.isLoggedIn = true;
@@ -30,12 +30,14 @@ export const useAuth = defineStore("auth", () => {
         session.isLoggedIn = true;
         fetchingStatus.value = FetchingStatus.success;
         message.success("Login successful");
-        return await navigateTo("/stock", { redirectCode: 301 });
       } else {
         session.isLoggedIn = false;
         fetchingStatus.value = FetchingStatus.failed;
         message.error("Login Failed");
       }
+      // router.push("/stock");
+      // return await navigateTo("/login", { redirectCode: 301 });
+      window.open("/stock", "_self");
     } catch (e) {
       session.isLoggedIn = false;
       fetchingStatus.value = FetchingStatus.failed;

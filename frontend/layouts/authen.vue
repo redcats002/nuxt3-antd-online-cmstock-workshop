@@ -8,9 +8,10 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useAuth } from '~/stores/useAuth';
+import { defineComponent, ref } from "vue";
+import { useAuth } from "~/store/auth";
 export default defineComponent({
   setup() {},
 });
 </script>
+~/store/auth ~/store/auth

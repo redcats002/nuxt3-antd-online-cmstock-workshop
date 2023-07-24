@@ -2,9 +2,10 @@
   <div><a-skeleton /></div>
 </template>
 <script lang="ts" setup>
-import { useAuth } from '~/stores/useAuth';
+import { useAuth } from "~/store/auth";
 
 definePageMeta({
-  layout: 'default',
+  layout: "default",
 });
 </script>
+~/store/auth

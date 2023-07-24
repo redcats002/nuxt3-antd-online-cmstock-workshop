@@ -1,4 +1,4 @@
-import { useAuth } from "~/stores/useAuth";
+import { useAuth } from "~/store/auth";
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   console.log("nuxtapp-middleware-global");

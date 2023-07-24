@@ -40,7 +40,7 @@
               <a-col :span="2">
                 <a-button
                   @click="$router.push('/stock/create')"
-                  class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all tw-flex tw-items-center tw-justify-center"
+                  class="tw-w-full tw-drop-shadow-sm hover:tw-drop-shadow-md tw-transition-all tw-flex tw-items-center tw-justify-center tw-border-white"
                   shape="rounded"
                   size="large"
                   type="primary"
@@ -87,7 +87,7 @@
 <script lang="ts" setup>
 import StockCard from "~/components/stock/Card.vue";
 import StockTable from "~/components/stock/Table.vue";
-import { useStockStore } from "~/stores/useStock";
+import { useStockStore } from "~/store/stock";
 import {
   SearchOutlined,
   ShoppingCartOutlined,
@@ -151,3 +151,4 @@ const handleClickEdit = (id: number) => {
 };
 </script>
 <style scoped></style>
+~/store/stock ~/store/stock

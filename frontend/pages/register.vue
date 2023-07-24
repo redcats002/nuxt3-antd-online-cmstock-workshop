@@ -68,7 +68,7 @@
 import { defineComponent, reactive, toRaw } from "vue";
 import { LockOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { Form } from "ant-design-vue";
-import { useAuth } from "~/stores/useAuth";
+import { useAuth } from "~/store/auth";
 
 export default defineComponent({
   components: {
@@ -127,3 +127,4 @@ export default defineComponent({
   },
 });
 </script>
+~/store/auth ~/store/auth

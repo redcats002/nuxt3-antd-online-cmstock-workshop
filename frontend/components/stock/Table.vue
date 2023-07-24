@@ -71,7 +71,7 @@ import {
 } from "@ant-design/icons-vue";
 
 import { defineComponent } from "vue";
-import { useStockStore } from "~/stores/useStock";
+import { useStockStore } from "~/store/stock";
 const columns = [
   {
     title: "Image",
@@ -156,3 +156,4 @@ export default defineComponent({
 });
 </script>
 <style></style>
+~/store/stock ~/store/stock

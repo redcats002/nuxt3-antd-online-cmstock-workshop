@@ -3,7 +3,7 @@
     <template #title>
       <span class="tw-font-bold tw-text-[0.8rem]"> Profit this day </span>
       <span class="tw-font-bold tw-text-[1.5rem] tw-block">
-        {{ formats.toCurrency(1999) }}
+        {{ formats.toCurrency(profit) }}
       </span>
     </template>
     <BarChart
@@ -19,6 +19,7 @@ import { BarChart, useBarChart } from "vue-chart-3";
 
 const props = defineProps({
   data: Array,
+  profit: Number,
 });
 const formats = useFormats();
 const options = ref({

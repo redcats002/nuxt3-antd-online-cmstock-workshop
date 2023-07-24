@@ -28,7 +28,7 @@
 </template>
 <script lang="ts">
 import { LogoutOutlined, AreaChartOutlined } from "@ant-design/icons-vue";
-import { useAuth } from "~/stores/useAuth";
+import { useAuth } from "~/store/auth";
 
 export default defineComponent({
   setup() {
@@ -38,3 +38,4 @@ export default defineComponent({
   components: { LogoutOutlined, AreaChartOutlined },
 });
 </script>
+~/store/auth ~/store/auth

@@ -13,7 +13,7 @@
       >
         <a-row>
           <a-col :span="24" class="tw-mb-4">
-            <ReportBarChart :data="lineData"></ReportBarChart>
+            <ReportBarChart :data="lineData" :profit="profit"></ReportBarChart>
           </a-col>
           <a-col :span="24">
             <a-button type="primary" @click="shuffleData">
@@ -39,8 +39,10 @@ definePageMeta({
 const lineData = ref([30, 40, 60, 70, 5, 35, 12, 75, 42, 33, 10, 2]);
 const barData = ref([30, 40, 60, 70, 5, 10, 10]);
 const pieData = ref([30, 40, 60]);
+const profit = ref(1999);
 const shuffleData = () => {
   const array = ref([lineData, barData, pieData]);
+  profit.value = +Math.floor(Math.random() * 10000);
   for (const [index, dataset] of array.value.entries()) {
     const tempDataset = dataset.value;
 
