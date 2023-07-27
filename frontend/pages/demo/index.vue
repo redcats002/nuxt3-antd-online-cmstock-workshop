@@ -18,6 +18,9 @@
         slug
       </a-button>
     </div>
+    <div class="tw-py-2">
+      <a-button @click="routeToStock" type="primary"> Route to Stock </a-button>
+    </div>
   </div>
 </template>
 
@@ -28,6 +31,13 @@ definePageMeta({
     name: "slide-in",
   },
 });
+const router = useRouter();
+const route = useRoute();
+
+const routeToStock = () => {
+  console.log(route.fullPath);
+  router.push("/stock");
+};
 </script>
 
 <style scoped></style>
