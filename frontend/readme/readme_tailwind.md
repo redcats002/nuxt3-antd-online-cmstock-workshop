@@ -39,7 +39,9 @@ file `~/assets/css/tailwind.css`
 
 file `~/tailwind.config.{js,cjs,mjs,ts}`
 
-`npx tailwindcss init`
+```bash
+npx tailwindcss init
+```
 
 ```ts
 /** @type {import('tailwindcss').Config} */

@@ -58,3 +58,5 @@ export default defineNuxtConfig({
 That's it! You can now use ant-design-vue in your Nuxt app ✨
 
 ref: <https://nuxt.com/modules/ant-design-vue>
+
+[AntDesignVue](https://antdv.com/components/overview)

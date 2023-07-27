@@ -37,9 +37,9 @@ Now, pinia offer 2 ways to define store are:
 - **option** stores (Traditional way)
   state, getters, actions
 - **setup** stores (Composite API like)
-  ref()s become state properties
-  computed()s become getters
-  function()s become actions
+  `refs()` become `state` properties
+  `computed()s` become `getters`
+  `function()s` become `actions`
 
 for more information visit this [link](https://pinia.vuejs.org/core-concepts/#defining-a-store)
 

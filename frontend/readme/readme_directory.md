@@ -2,6 +2,6 @@
 
 Nuxt3 didn't provide /src you can create directory such as /pages , /components, /layouts, composables ,etc... in root
 
-ref: <https://nuxt.com/docs/guide/directory-structure>
+ref: <https://nuxt.com/docs/guide/directory-structure/utils#utils-directory>
 
 **Note that: after setup any directory likes /pages, /layouts please re generate or yarn dev again**

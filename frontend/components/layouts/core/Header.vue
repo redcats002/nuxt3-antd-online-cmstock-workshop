@@ -38,4 +38,3 @@ export default defineComponent({
   components: { LogoutOutlined, AreaChartOutlined },
 });
 </script>
-~/store/auth ~/store/auth

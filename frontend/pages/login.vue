@@ -140,4 +140,3 @@ export default defineComponent({
   },
 });
 </script>
-~/store/auth ~/store/auth

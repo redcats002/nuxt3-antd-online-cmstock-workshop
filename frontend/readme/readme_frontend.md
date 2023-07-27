@@ -29,6 +29,7 @@ Install
 code --install-extension MisterJ.vue-volar-extention-pack
 code --install-extension sdras.vue-vscode-extensionpack
 code --install-extension bradlc.vscode-tailwindcss
+code --install-extension ant-design-vue.vscode-ant-design-vue-helper
 ```
 
 For **TypeScript**
@@ -123,6 +124,7 @@ yarn nuxi typecheck
 9. [middleware/](/frontend/readme/readme_middleware.md)
 10. [layouts/](/frontend/readme/readme_layouts.md)
 11. [pages/](/frontend/readme/readme_route.md)
+12. .env
 
 ## .env
 

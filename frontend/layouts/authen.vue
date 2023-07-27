@@ -14,4 +14,3 @@ export default defineComponent({
   setup() {},
 });
 </script>
-~/store/auth ~/store/auth

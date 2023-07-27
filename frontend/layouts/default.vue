@@ -13,6 +13,6 @@
   </a-layout>
 </template>
 <script lang="ts" setup>
-import { defineComponent, ref } from "vue";
+import { ref } from "vue";
 const collapsed = ref<boolean>(false);
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <a-card hoverable type="inner" class="tw-rounded-lg">
+  <a-card hoverable type="inner" class="tw-rounded-lg tw-w-[500px]">
     <template #cover>
       <img
         alt="example"
@@ -9,9 +9,8 @@
     </template>
     <a-card-meta class="tw-mb-4">
       <template #title>
-        <a-row align="center" justify="center">
-          <span class="tw-font-bold tw-text-xl">Register</span>
-        </a-row>
+        <span class="tw-font-bold tw-text-2xl tw-tracking-wider">Register</span>
+        <a-divider class="tw-my-4"></a-divider>
       </template>
     </a-card-meta>
     <a-form
@@ -127,4 +126,3 @@ export default defineComponent({
   },
 });
 </script>
-~/store/auth ~/store/auth
