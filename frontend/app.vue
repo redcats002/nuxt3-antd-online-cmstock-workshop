@@ -1,5 +1,7 @@
 <template>
-  <!-- <a-config-provider
+  <!-- 
+    // For antd-vue-4.x.x
+    <a-config-provider
     :theme="{
       token: {
         colorPrimary: `#00DC82`,

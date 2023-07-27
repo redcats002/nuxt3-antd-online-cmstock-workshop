@@ -11,3 +11,10 @@ img.ant-image-preview-img {
 .ant-menu-submenu-arrow {
   color: white !important;
 }
+
+code {
+  background-color: #2c292d !important;
+  color: whitesmoke;
+  border-radius: 5px;
+  padding: 5px;
+}

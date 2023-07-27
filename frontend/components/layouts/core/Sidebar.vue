@@ -89,11 +89,21 @@ export default defineComponent({
       { name: "Stock", to: "/stock", icon: StockOutlined, isSub: false },
       { name: "Report", to: "/report", icon: PieChartOutlined, isSub: false },
       {
-        name: "Navigation 3",
+        name: "Demo",
         icon: TeamOutlined,
         options: [
-          { name: "Option 1", to: "/nav3O1", icon: "StockOutlined" },
-          { name: "Option 2", to: "/nav3O2", icon: "StockOutlined" },
+          { name: "index", to: "/demo", icon: "StockOutlined" },
+          { name: "about", to: "/demo/about", icon: "StockOutlined" },
+          {
+            name: "docs",
+            to: "/demo/docs/string",
+            icon: "StockOutlined",
+          },
+          {
+            name: "forum",
+            to: "/demo/docs/forum/99",
+            icon: "StockOutlined",
+          },
         ],
         isSub: true,
       },

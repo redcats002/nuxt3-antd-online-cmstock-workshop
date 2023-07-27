@@ -78,6 +78,7 @@ export default defineComponent({
     definePageMeta({
       layout: "authen",
     });
+
     const useForm = Form.useForm;
     const authStore = useAuth();
     const modelRef = reactive({
